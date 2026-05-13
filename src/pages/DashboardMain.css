@@ -7,7 +7,7 @@
     flex-direction: column;
     width: 250px;
     height: 100vh;
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
 }
 
 .sidebar_header {
@@ -44,6 +44,11 @@
     padding: 1em;
 }
 
+.sidebar_nav a:hover {
+    background-color: #f0f0f0;
+    
+}
+
 .sidebar_link.sidebar_link {
     color: #64748b;
     
@@ -51,6 +56,17 @@
 
 .active_link.active_link {
     color: #1b4332;
+    
+    background-color: #E4F1EA;
+    /* box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1); */
+}
+
+.active_link.active_link:hover {
     background-color: #ecfdf5;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard_content {
+    padding: 1em;
+    background-color: #E4F1EA;
+    width: 100%;
 }

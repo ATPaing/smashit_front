@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import DashboardMain from "./pages/DashboardMain";
+import GameDetailsPage from "./pages/GameDetailsPage";
 
 // css
 import "./App.css";
@@ -41,6 +42,8 @@ function App() {
                 <Route index element={<DashboardHome />} />
 
                 <Route path="games" element={<GamesPage />} />
+
+                <Route path="games/:gameId" element={<GameDetailsPage />} />
 
                 <Route path="notifications" element={<NotificationsPage />} />
 
