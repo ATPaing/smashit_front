@@ -9,6 +9,11 @@ import reliabilityIcon from "../assets/reliability_icon.svg";
 import gamesIcon from "../assets/games.svg";
 import activityIcon from "../assets/activity_icon.svg";
 import friendReqIcon from "../assets/friend_req_icon.svg";
+import invitationIcon from "../assets/invitation_icon.svg";
+import matchAcceptedIcon from "../assets/match_accepted_icon.svg";
+
+// components
+import DashboardNotiCard from "../components/Dashboard_noti_card";
 
 const DashboardHome = () => {
     const gameId = "12345"; // This would typically come from props or state
@@ -72,67 +77,52 @@ const DashboardHome = () => {
                     </div>
                 </div>
             </div>
-            <div className="dashboard_notification_section">
-                <div className="dashboard_notification_header">
-                    <img src={activityIcon} alt="activity_icon" />
-                    <p>Activity</p>
-                    <NavLink className="dashboard_noti_view_all_btn" to='notifications'>View All</NavLink>
+            <div className="dashboard_right_section">
+                <div className="dashboard_notification_section">
+                    <div className="dashboard_notification_header">
+                        <img src={activityIcon} alt="activity_icon" />
+                        <p>Activity</p>
+                        <NavLink
+                            className="dashboard_noti_view_all_btn"
+                            to="notifications"
+                        >
+                            View All
+                        </NavLink>
+                    </div>
+                    <div className="noti_card_wrapper">
+                        <DashboardNotiCard
+                            type="fri_req_noti"
+                            icon={friendReqIcon}
+                            title="NEW FRIEND REQUEST"
+                            time="3m ago"
+                            message="PiCa wants to connect with you."
+                            extra="View profile to accept or ignore."
+                        />
+                        <DashboardNotiCard
+                            type="invitation_noti"
+                            icon={invitationIcon}
+                            title="INVITATION RECEIVED"
+                            time="8m ago"
+                            message="Arthur invited you to a match."
+                            extra="at Horfield Court."
+                        />
+
+                        <DashboardNotiCard
+                            type="match_accepted_noti"
+                            icon={matchAcceptedIcon}
+                            title="MATCH ACCEPTED"
+                            time="15m ago"
+                            message="Your match request has been accepted."
+                            extra="Get ready to play!"
+                        />
+                    </div>
                 </div>
-                <div className="noti_card_wrapper">
-                    <div className="noti_card">
-                        <div className="noti_card_img_wrapper">
-                            <img src={friendReqIcon} alt="" />
-                        </div>
-                        <div className="noti_card_details">
-                            <div className="noti_title_time_wrapper">
-                                <p className="noti_title">NEW FRIEND REQUEST</p>
-                                <p className="noti_time">5m ago</p>
-                            </div>
-
-                            <p className="noti_message">
-                                PiCa wants to connect with you.
-                            </p>
-                            <p className="noti_extra">
-                                View profile to accept or ignore.
-                            </p>
-                        </div>
+                <div className="dashboard_create_new_game_wrapper">
+                    <div className="dashboard_create_new_game_content">
+                    <p className="dashboard_create_new_game_title">Create New Game.</p>
+                    <p className="dashboard_create_new_game_description">Host a public or private session</p>
                     </div>
-                    <div className="noti_card">
-                        <div className="noti_card_img_wrapper">
-                            <img src={friendReqIcon} alt="" />
-                        </div>
-                        <div className="noti_card_details">
-                            <div className="noti_title_time_wrapper">
-                                <p className="noti_title">NEW FRIEND REQUEST</p>
-                                <p className="noti_time">5m ago</p>
-                            </div>
 
-                            <p className="noti_message">
-                                PiCa wants to connect with you.
-                            </p>
-                            <p className="noti_extra">
-                                View profile to accept or ignore.
-                            </p>
-                        </div>
-                    </div>
-                    <div className="noti_card">
-                        <div className="noti_card_img_wrapper">
-                            <img src={friendReqIcon} alt="" />
-                        </div>
-                        <div className="noti_card_details">
-                            <div className="noti_title_time_wrapper">
-                                <p className="noti_title">NEW FRIEND REQUEST</p>
-                                <p className="noti_time">5m ago</p>
-                            </div>
-
-                            <p className="noti_message">
-                                PiCa wants to connect with you.
-                            </p>
-                            <p className="noti_extra">
-                                View profile to accept or ignore.
-                            </p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
