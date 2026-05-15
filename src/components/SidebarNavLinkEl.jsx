@@ -6,8 +6,7 @@ const SidebarNavLinkEl = (dirLink, icon, activeIcon, label) => {
         <li>
             <NavLink
                 to={dirLink}
-                replace
-                end
+                end={dirLink === "/dashboard"}
                 className={({ isActive }) =>
                     `sidebar_link ${isActive ? "active_link" : ""}`
                 }

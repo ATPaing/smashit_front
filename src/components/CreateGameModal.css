@@ -1,0 +1,201 @@
+.modal_overlay {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(6px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+
+.modal_card {
+    width: 560px;
+
+    background: white;
+
+    border-radius: 18px;
+
+    padding: 32px;
+
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.18);
+
+    border-bottom: 6px solid #0f5132;
+}
+
+.modal_header {
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    margin-bottom: 28px;
+}
+
+.modal_header_text {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal_title {
+    margin: 0;
+
+    font-size: 32px;
+    font-weight: 800;
+
+    color: #052e1d;
+}
+
+.modal_subtitle {
+    margin-top: 8px;
+    margin-bottom: 0;
+
+    font-size: 14px;
+
+    color: #64748b;
+}
+
+.modal_close_btn {
+    border: none;
+    background: transparent;
+
+    font-size: 28px;
+
+    cursor: pointer;
+
+    color: #64748b;
+
+    padding: 0;
+}
+
+.modal_form {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+.form_group {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.form_group label {
+    font-size: 13px;
+    font-weight: 700;
+
+    color: #0f172a;
+}
+
+.form_group input,
+.form_group select,
+.datepicker_input {
+    width: 100%;
+    height: 46px;
+
+    border: 1px solid #dbe3ea;
+
+    border-radius: 12px;
+
+    padding: 0 14px;
+
+    font-size: 14px;
+
+    outline: none;
+
+    box-sizing: border-box;
+}
+
+.form_group input:focus,
+.form_group select:focus,
+.datepicker_input:focus {
+    border-color: #0f5132;
+
+    box-shadow: 0 0 0 3px rgba(15, 81, 50, 0.12);
+}
+
+.form_row {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 18px;
+}
+
+/* Remove number arrows */
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.modal_actions {
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 14px;
+
+    margin-top: 10px;
+}
+
+.cancel_btn,
+.create_btn {
+    height: 44px;
+
+    padding: 0 24px;
+
+    border-radius: 10px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.cancel_btn {
+    background: white;
+
+    border: 1px solid #dbe3ea;
+
+    color: #1e293b;
+}
+
+.cancel_btn:hover {
+    background: #f8fafc;
+}
+
+.create_btn {
+    border: none;
+
+    background: #0f5132;
+
+    color: white;
+
+    box-shadow: 0 10px 25px rgba(15, 81, 50, 0.25);
+}
+
+.create_btn:hover {
+    transform: translateY(-2px);
+}
+
+.react-datepicker-wrapper {
+    width: 100%;
+}
+
+.react-datepicker__input-container {
+    width: 100%;
+}

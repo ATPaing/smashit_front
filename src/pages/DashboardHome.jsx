@@ -1,5 +1,7 @@
 // libs
 import { NavLink } from "react-router-dom";
+import { useState } from "react";
+
 // css
 import "./DashboardHome.css";
 
@@ -14,10 +16,11 @@ import matchAcceptedIcon from "../assets/match_accepted_icon.svg";
 
 // components
 import DashboardNotiCard from "../components/Dashboard_noti_card";
+import CreateGameModal from "../components/CreateGameModal";
 
 const DashboardHome = () => {
     const gameId = "12345"; // This would typically come from props or state
-
+    const [isCreateGameModalOpen, setIsCreateGameModalOpen] = useState(false);
     return (
         <div className="dashboard_home_wrapper">
             <div className="dashboard_middle_section">
@@ -105,6 +108,7 @@ const DashboardHome = () => {
                             time="8m ago"
                             message="Arthur invited you to a match."
                             extra="at Horfield Court."
+                            game_id="123"
                         />
 
                         <DashboardNotiCard
@@ -114,17 +118,18 @@ const DashboardHome = () => {
                             time="15m ago"
                             message="Your match request has been accepted."
                             extra="Get ready to play!"
+                            game_id="13"
                         />
                     </div>
                 </div>
-                <div className="dashboard_create_new_game_wrapper">
+                <div className="dashboard_create_new_game_wrapper" onClick={() => setIsCreateGameModalOpen(true)}>
                     <div className="dashboard_create_new_game_content">
                     <p className="dashboard_create_new_game_title">Create New Game.</p>
                     <p className="dashboard_create_new_game_description">Host a public or private session</p>
                     </div>
-
                 </div>
             </div>
+            {isCreateGameModalOpen && <CreateGameModal onClose={() => setIsCreateGameModalOpen(false)} />}
         </div>
     );
 };
