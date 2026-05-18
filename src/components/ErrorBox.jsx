@@ -6,11 +6,11 @@ import "./ErrorBox.css";
 
 const ErrorBox = ({ message }) => {
     return (
-                            <div className="error_box">
-                        <img src={error_icon} alt="Error Icon" className="error_icon" />
-                        <p className="error_msg">{message}</p>
-                    </div>
-    )
-}
+        <div className="error_box">
+            <img src={error_icon} alt="Error Icon" className="error_icon" />
+            <p className="error_msg">{message}</p>
+        </div>
+    );
+};
 
 export default ErrorBox;

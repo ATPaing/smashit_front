@@ -1,15 +1,25 @@
 import { useState } from "react";
 import DatePicker from "react-datepicker";
+import { useAuth } from "../hooks/useAuth";
+
+import ErrorBox from "./ErrorBox";
+
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./CreateGameModal.css";
 
+
+
 function CreateGameModal({ onClose }) {
+    const { token } = useAuth();
+
+    const [error, setError] = useState(null);
+
     const [formData, setFormData] = useState({
         name: "",
         location: "",
-        fee_type: "free",
-        min_reliability_score: 80,
+        feeType: "FREE",
+        minReliabilityScore: 80,
     });
 
     const [startTime, setStartTime] = useState(new Date());
@@ -17,25 +27,48 @@ function CreateGameModal({ onClose }) {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-
+        setError(null);
         setFormData((prev) => ({
             ...prev,
             [name]: value,
         }));
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         const gameData = {
             name: formData.name,
             location: formData.location,
-            start_time: startTime.toISOString(),
-            end_time: endTime.toISOString(),
-            fee_type: formData.fee_type,
-            min_reliability_score: Number(formData.min_reliability_score),
+            startTime: startTime.toISOString(),
+            endTime: endTime.toISOString(),
+            feeType: formData.feeType,
+            minReliabilityScore: Number(formData.minReliabilityScore),
         };
 
+        try {
+            const response = await fetch("http://localhost:3000/game/create", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(gameData),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message);
+            }
+
+            console.log(data);
+
+            onClose();
+        } catch (err) {
+            setError(err.message);
+            console.error(err);
+        }
         console.log(gameData);
     };
 
@@ -124,12 +157,12 @@ function CreateGameModal({ onClose }) {
                             <label>Fee Type</label>
 
                             <select
-                                name="fee_type"
-                                value={formData.fee_type}
+                                name="feeType"
+                                value={formData.feeType}
                                 onChange={handleChange}
                             >
-                                <option value="free">Free</option>
-                                <option value="split">Split</option>
+                                <option value="FREE">Free</option>
+                                <option value="SPLIT">Split</option>
                             </select>
                         </div>
 
@@ -138,8 +171,8 @@ function CreateGameModal({ onClose }) {
 
                             <input
                                 type="number"
-                                name="min_reliability_score"
-                                value={formData.min_reliability_score}
+                                name="minReliabilityScore"
+                                value={formData.minReliabilityScore}
                                 onChange={handleChange}
                                 min={0}
                                 max={100}
@@ -147,7 +180,7 @@ function CreateGameModal({ onClose }) {
                             />
                         </div>
                     </div>
-
+                    {error && <ErrorBox message={error} />}
                     <div className="modal_actions">
                         <button
                             type="button"
