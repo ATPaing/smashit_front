@@ -247,16 +247,17 @@
 
 
 .dashboard_create_new_game_wrapper {
-    background: url('../assets/create_game_bg.png') no-repeat ;
-    width: 323px;
-    height: 216px;
+    background: url('../assets/create_game_bg.png') no-repeat;
+    background-size: 250px 150px;
+    width: 250px;
+    height: 150px;
     display: flex;
     flex-direction: column;
     cursor: pointer;
 }
 
 .dashboard_create_new_game_wrapper:hover {
-    background: url('../assets/create_game_bg.png') no-repeat ;
+    /* background: url('../assets/create_game_bg.png') no-repeat ; */
     filter: brightness(0.8);
 }
 
