@@ -56,9 +56,10 @@
     display: flex;
     gap: clamp(2rem, 2vw, 3rem);
     margin-top: 1em;
-    background-color: #f1f5f9;
+    background-color: #dceaf9;
     padding: 1em 1.5em;
     border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .event_info {

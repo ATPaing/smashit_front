@@ -10,7 +10,11 @@ const UpcomingEventCard = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchNextGame = async () => {
+        if (!token) return;
+
+        let ignore = false;
+
+        const fetchInitialGame = async () => {
             try {
                 const response = await fetch(
                     "http://localhost:3000/game/next",
@@ -27,15 +31,40 @@ const UpcomingEventCard = () => {
                     throw new Error(data.message);
                 }
 
-                setGameData(data.game);
+                if (!ignore) {
+                    setGameData(data.game);
+                }
             } catch (err) {
                 console.error(err);
             } finally {
-                setLoading(false);
+                if (!ignore) {
+                    setLoading(false);
+                }
             }
         };
 
-        fetchNextGame();
+        fetchInitialGame();
+
+        const eventSource = new EventSource(
+            `http://localhost:3000/sse/events?token=${token}`,
+        );
+
+        eventSource.onopen = () => {
+            console.log("SSE connected");
+        };
+
+        eventSource.onerror = (err) => {
+            console.error("SSE error", err);
+        };
+
+        eventSource.addEventListener("next-game-changed", () => {
+            fetchInitialGame();
+        });
+
+        return () => {
+            ignore = true;
+            eventSource.close();
+        };
     }, [token]);
 
     if (loading) {
@@ -70,6 +99,7 @@ const UpcomingEventCard = () => {
             <div className="event_details">
                 <div className="event_info event_date">
                     <p className="event_label">Date & Time</p>
+
                     <p className="event_value">
                         {new Date(gameData.startTime).toLocaleString("en-US", {
                             month: "short",
@@ -82,11 +112,13 @@ const UpcomingEventCard = () => {
 
                 <div className="event_info event_fees">
                     <p className="event_label">FEE TYPE</p>
+
                     <p className="event_value">{gameData.feeType}</p>
                 </div>
 
                 <div className="event_info event_host">
                     <p className="event_label">HOST</p>
+
                     <p className="event_value">
                         {gameData.host?.name || "Unknown"}
                     </p>
@@ -94,6 +126,7 @@ const UpcomingEventCard = () => {
 
                 <div className="event_info event_min_reliability">
                     <p className="event_label">MIN RELIABILITY</p>
+
                     <p className="event_value">
                         {gameData.minReliabilityScore}+
                     </p>
