@@ -1,6 +1,7 @@
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import { useAuth } from "../hooks/useAuth";
+import { toast } from "react-toastify";
 
 import ErrorBox from "./ErrorBox";
 
@@ -62,14 +63,13 @@ function CreateGameModal({ onClose }) {
                 throw new Error(data.message);
             }
 
-            console.log(data);
+            toast.success("Game created successfully!");
 
             onClose();
         } catch (err) {
             setError(err.message);
-            console.error(err);
+            toast.error(err.message || "Something went wrong");
         }
-        console.log(gameData);
     };
 
     return (
