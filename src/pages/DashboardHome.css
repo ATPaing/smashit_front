@@ -74,7 +74,7 @@
 }
 
 .event_value {
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #1e293b;
     font-weight: bold;
 }
@@ -154,7 +154,7 @@
     color: #059669;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1390px) {
     .dashboard_home_wrapper {
         flex-direction: column;
         gap: 2em;

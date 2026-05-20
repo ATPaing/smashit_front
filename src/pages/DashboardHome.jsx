@@ -6,7 +6,7 @@ import { useState } from "react";
 import "./DashboardHome.css";
 
 // icons
-import locationIcon from "../assets/location_icon.svg";
+
 import reliabilityIcon from "../assets/reliability_icon.svg";
 import gamesIcon from "../assets/games.svg";
 import activityIcon from "../assets/activity_icon.svg";
@@ -17,42 +17,15 @@ import matchAcceptedIcon from "../assets/match_accepted_icon.svg";
 // components
 import DashboardNotiCard from "../components/Dashboard_noti_card";
 import CreateGameModal from "../components/CreateGameModal";
+import UpcomingEventCard from "../components/UpcomingEventCard";
 
 const DashboardHome = () => {
-    const gameId = "12345"; // This would typically come from props or state
+
     const [isCreateGameModalOpen, setIsCreateGameModalOpen] = useState(false);
     return (
         <div className="dashboard_home_wrapper">
             <div className="dashboard_middle_section">
-                <div className="upcoming_event_card">
-                    <p className="event_category">UPCOMING MATCH</p>
-                    <p className="event_title">Elite Double Championship</p>
-                    <div className="event_location">
-                        <img src={locationIcon} alt="Location" />
-                        <p>Downtown Badminton Center, Court 4</p>
-                    </div>
-                    <div className="event_details">
-                        <div className="event_info event_date">
-                            <p className="event_label">Date & Time</p>
-                            <p className="event_value">Oct 24, 06:30 PM</p>
-                        </div>
-                        <div className="event_info event_fees">
-                            <p className="event_label">FEE TYPE</p>
-                            <p className="event_value">Split</p>
-                        </div>
-                        <div className="event_info event_host">
-                            <p className="event_label">HOST</p>
-                            <p className="event_value">John Doe</p>
-                        </div>
-                        <div className="event_info event_min_reliability">
-                            <p className="event_label">MIN RELIABILITY</p>
-                            <p className="event_value">95+</p>
-                        </div>
-                    </div>
-                    <div className="expand_details">
-                        <NavLink to={`games/${gameId}`}>Expand Details</NavLink>
-                    </div>
-                </div>
+                <UpcomingEventCard />
                 <div className="metrics_section">
                     <div className="metric_card games_played">
                         <div className="metric_icon">
