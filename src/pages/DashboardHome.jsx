@@ -7,8 +7,6 @@ import "./DashboardHome.css";
 
 // icons
 
-import reliabilityIcon from "../assets/reliability_icon.svg";
-import gamesIcon from "../assets/games.svg";
 import activityIcon from "../assets/activity_icon.svg";
 import friendReqIcon from "../assets/friend_req_icon.svg";
 import invitationIcon from "../assets/invitation_icon.svg";
@@ -18,6 +16,7 @@ import matchAcceptedIcon from "../assets/match_accepted_icon.svg";
 import DashboardNotiCard from "../components/Dashboard_noti_card";
 import CreateGameModal from "../components/CreateGameModal";
 import UpcomingEventCard from "../components/UpcomingEventCard";
+import DashMetrices from "../components/DashboardMetrices";
 
 const DashboardHome = () => {
 
@@ -26,32 +25,7 @@ const DashboardHome = () => {
         <div className="dashboard_home_wrapper">
             <div className="dashboard_middle_section">
                 <UpcomingEventCard />
-                <div className="metrics_section">
-                    <div className="metric_card games_played">
-                        <div className="metric_icon">
-                            <img src={gamesIcon} alt="Games Played" />
-                        </div>
-                        <div className="metric_details">
-                            <p className="metric_label">TOTAL MATCHES</p>
-                            <p className="metric_value">124</p>
-                            <p className="metric_description">
-                                Played this season
-                            </p>
-                        </div>
-                    </div>
-                    <div className="metric_card reliability">
-                        <div className="metric_icon">
-                            <img src={reliabilityIcon} alt="Reliability" />
-                        </div>
-                        <div className="metric_details">
-                            <p className="metric_label">RELIABILITY SCORE</p>
-                            <p className="metric_value">98%</p>
-                            <p className="metric_description">
-                                Based on attendance
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <DashMetrices />
             </div>
             <div className="dashboard_right_section">
                 <div className="dashboard_notification_section">
