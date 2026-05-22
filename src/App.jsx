@@ -24,6 +24,12 @@ import FriendsPage from "./pages/FriendsPage";
 import ProfilePage from "./pages/ProfilePage";
 import SettingsPage from "./pages/SettingsPage";
 
+// games sub-pages
+import UpcomingGames from "./pages/UpcomingGames";
+import PastGames from "./pages/PastGames";
+import CurrentGames from "./pages/CurrentGames";
+import InvitedGames from "./pages/InvitedGames";
+
 function App() {
     return (
         <>
@@ -44,8 +50,14 @@ function App() {
                 >
                     <Route index element={<DashboardHome />} />
 
-                    <Route path="games" element={<GamesPage />} />
-
+                    <Route path="games" element={<GamesPage />}>
+                        <Route index element={<UpcomingGames />} />
+                        <Route path="upcoming-games" element={<UpcomingGames />} />
+                        <Route path="past-games" element={<PastGames />} />
+                        <Route path="current-games" element={<CurrentGames />} />
+                        <Route path="invited-games" element={<InvitedGames />} />
+                    </Route>
+                
                     <Route path="games/:gameId" element={<GameDetailsPage />} />
 
                     <Route
