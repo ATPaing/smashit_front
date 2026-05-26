@@ -1,0 +1,104 @@
+.currentGameCard {
+    width: 320px;
+    background: white;
+    border-radius: 12px;
+    border-left: 4px solid #2b5c95;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    cursor: pointer;
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.currentGameCard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 32px rgba(15, 23, 42, 0.12);
+}
+
+.currentGameCard_content {
+    padding: 1.3em;
+}
+
+.currentGameCard h3 {
+    color: #18432d;
+    font-size: 1.5rem;
+    margin-bottom: 0.7em;
+}
+
+.currentGame_time,
+.currentGame_location {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-bottom: 0.7em;
+}
+
+.currentGame_time img,
+.currentGame_location img {
+    width: 14px;
+}
+
+.currentGame_divider {
+    height: 1px;
+    background: #edf1f5;
+    margin-block: 1.4em;
+}
+
+.currentGame_host {
+    display: flex;
+    align-items: center;
+    gap: 0.9em;
+    margin-bottom: 1.2em;
+}
+
+
+
+.hostName {
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.hostRole {
+    font-size: 0.7rem;
+    color: #10b981;
+    margin-top: 0.2em;
+}
+
+.currentGame_invitees {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.inviteeImages {
+    display: flex;
+    align-items: center;
+}
+
+
+.inviteeCount {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 2px solid white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #334155;
+}
+
+
+.inviteeCount {
+    background: #dbeafe;
+    margin-left: -10px;
+}
+
+.currentGame_invitees p {
+    color: #475569;
+    font-size: 0.9rem;
+}

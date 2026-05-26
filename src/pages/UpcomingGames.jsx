@@ -66,11 +66,10 @@ const UpcomingGames = () => {
         setGames((prevGames) =>
             prevGames.map((game) =>
                 game.id === gameId
-                    ?
-                    {
-                        ...game,
-                        rsvpStatus,
-                    }
+                    ? {
+                          ...game,
+                          rsvpStatus,
+                      }
                     : game,
             ),
         );
@@ -78,6 +77,13 @@ const UpcomingGames = () => {
 
     return (
         <div className="upcomingGamesPage_outlet">
+            <div className="upcomingGames_header">
+                <h2>Upcoming Games</h2>
+                <p>
+                    Stay on top of your scheduled matches, manage your sessions,
+                    and prepare for your upcoming games.
+                </p>
+            </div>
             {games.map((game) => (
                 <UpcomingGameCard
                     key={game.id}

@@ -1,0 +1,129 @@
+.invitedGameCard {
+    width: 265px;
+
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+
+    border-left: 4px solid #1f5f9f;
+
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+
+    display: flex;
+    flex-direction: column;
+}
+
+.invitedGameCard_content {
+    padding: 1.5em;
+
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.invitedGameCard_host {
+    display: flex;
+    align-items: center;
+    gap: 0.8em;
+    margin-bottom: 1.5em;
+}
+
+.hostLabel {
+    font-size: 0.65rem;
+    color: #64748b;
+    font-weight: 700;
+}
+
+.hostName {
+    color: #012d1d;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.invitedGameCard h3 {
+    color: #012d1d;
+    font-size: 1.35rem;
+    /* margin-bottom: 1em; */
+
+    min-height: 68px;
+
+    display: flex;
+    align-items: flex-start;
+}
+
+.invitedGameCard_detail {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+
+    margin-bottom: 0.5em;
+
+    color: #64748b;
+
+    min-height: 40px;
+}
+
+.invitedGameCard_detail img {
+    width: 16px;
+    margin-top: 2px;
+}
+
+.invitedGameCard_actions {
+    background: #f8fafc;
+
+    padding: 1em 1.5em;
+
+    display: flex;
+    gap: 0.8em;
+
+    margin-top: auto;
+}
+
+.declineBtn,
+.acceptBtn {
+    flex: 1;
+    padding: 0.7em 1em;
+
+    border-radius: 10px;
+    cursor: pointer;
+
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.declineBtn {
+    background: white;
+    color: #dc2626;
+    border: 1px solid #dc2626;
+}
+
+.declineBtn:hover {
+    background: #dc2626;
+    color: white;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 8px 18px rgba(220, 38, 38, 0.2);
+}
+
+.acceptBtn {
+    background: #14532d;
+    color: white;
+    border: 1px solid #14532d;
+}
+
+.acceptBtn:hover {
+    background: #166534;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 8px 18px rgba(20, 83, 45, 0.25);
+}

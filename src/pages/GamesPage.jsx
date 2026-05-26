@@ -12,7 +12,7 @@ const GamesPage = () => {
         <div className="gamesPage">
             <div className="gamesPage_header_wrapper">
                 <div className="gamesPage_header">
-                    <h1>Games Page</h1>
+
                     <p>
                         Organize your matches, respond to invites, and track
                         your performance.
