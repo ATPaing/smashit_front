@@ -1,0 +1,167 @@
+.rsvp_modal {
+    width: 90%;
+    max-width: 460px;
+
+    background: white;
+    border-radius: 24px;
+
+    padding: 28px;
+
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.rsvp_header {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.rsvp_icon_wrapper {
+    width: 56px;
+    height: 56px;
+
+    border-radius: 50%;
+    background: #eef6ea;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 24px;
+}
+
+.rsvp_header h2 {
+    font-size: 26px;
+    font-weight: 700;
+
+    margin-bottom: 4px;
+}
+
+.rsvp_subtitle {
+    font-size: 16px;
+    color: #666;
+}
+
+.rsvp_game_info {
+    margin-top: 28px;
+}
+
+.rsvp_game_title {
+    font-size: 20px;
+    font-weight: 700;
+
+    margin-bottom: 8px;
+}
+
+.rsvp_location_row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rsvp_game_location {
+    font-size: 16px;
+    color: #666;
+}
+
+.rsvp_divider {
+    height: 1px;
+    background: #e5e5e5;
+
+    margin: 24px 0;
+}
+
+.response_title {
+    font-size: 17px;
+    font-weight: 700;
+
+    margin-bottom: 16px;
+}
+
+.rsvp_options {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.rsvp_options label {
+    border: 2px solid #e6e6e6;
+    border-radius: 16px;
+
+    padding: 18px;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.rsvp_options label span {
+    font-size: 17px;
+}
+
+.rsvp_options label.active {
+    font-weight: 700;
+}
+
+.rsvp_options label.not_sure {
+    border-color: #f59e0b;
+    background: #fffbef;
+}
+
+.rsvp_options label.going {
+    border-color: #22c55e;
+    background: #f0fdf4;
+}
+
+.rsvp_options label.not_going {
+    border-color: #ef4444;
+    background: #fef2f2;
+}
+
+.rsvp_options input[type="radio"] {
+    width: 20px;
+    height: 20px;
+}
+
+.modal_actions {
+    margin-top: 30px;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 16px;
+}
+
+.cancel_btn {
+    background: transparent;
+    border: none;
+
+    color: #dc2626;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.submit_btn {
+    background: #0f172a;
+    color: white;
+
+    border: none;
+    border-radius: 14px;
+
+    padding: 14px 24px;
+
+    font-size: 16px;
+
+    cursor: pointer;
+}
+
+.submit_btn:hover {
+    background: #3f454f;
+}

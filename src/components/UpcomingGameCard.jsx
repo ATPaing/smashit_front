@@ -4,7 +4,7 @@ import locationIcon from "../assets/location_icon.svg";
 import clockIcon from "../assets/clock.svg";
 import personIcon from "../assets/person_icon.svg";
 
-const UpcomingGameCard = ({ game, onEdit }) => {
+const UpcomingGameCard = ({ game, onEdit, onRespond }) => {
     const navigate = useNavigate();
 
     const isHost = game.role === "host";
@@ -105,13 +105,10 @@ const UpcomingGameCard = ({ game, onEdit }) => {
                         </button>
                     </>
                 ) : (
-                    <button
-                        className="rsvp_btn"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            console.log("Update RSVP");
-                        }}
-                    >
+                    <button className="rsvp_btn" onClick={ (e) => {
+                        e.stopPropagation();
+                        onRespond();
+                    }}>
                         Update RSVP
                     </button>
                 )}

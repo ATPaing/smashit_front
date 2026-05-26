@@ -2,11 +2,14 @@ import { useState } from "react";
 
 import UpcomingGameCard from "../components/UpcomingGameCard";
 import EditGameModal from "../components/EditGameModal";
+import RsvpModal from "../components/RsvpModal";
 
 import "./UpcomingGames.css";
 
 const UpcomingGames = () => {
     const [selectedGame, setSelectedGame] = useState(null);
+
+    const [selectedRsvpGame, setSelectedRsvpGame] = useState(null);
 
     const [games, setGames] = useState([
         {
@@ -26,7 +29,7 @@ const UpcomingGames = () => {
             hostName: "Coach Elena",
             location: "Westside Sports Hall",
             role: "guest",
-            rsvpStatus: "accepted",
+            rsvpStatus: "going",
             playersJoined: 5,
         },
         {
@@ -46,7 +49,7 @@ const UpcomingGames = () => {
             hostName: "James Carter",
             location: "North Community Court",
             role: "guest",
-            rsvpStatus: "pending",
+            rsvpStatus: "not_sure",
             playersJoined: 4,
         },
     ]);
@@ -54,8 +57,22 @@ const UpcomingGames = () => {
     const handleSaveGame = (updatedGame) => {
         setGames((prevGames) =>
             prevGames.map((game) =>
-                game.id === updatedGame.id ? updatedGame : game
-            )
+                game.id === updatedGame.id ? updatedGame : game,
+            ),
+        );
+    };
+
+    const handleRsvpSubmit = ({ gameId, rsvpStatus }) => {
+        setGames((prevGames) =>
+            prevGames.map((game) =>
+                game.id === gameId
+                    ?
+                    {
+                        ...game,
+                        rsvpStatus,
+                    }
+                    : game,
+            ),
         );
     };
 
@@ -66,6 +83,7 @@ const UpcomingGames = () => {
                     key={game.id}
                     game={game}
                     onEdit={() => setSelectedGame(game)}
+                    onRespond={() => setSelectedRsvpGame(game)}
                 />
             ))}
 
@@ -74,6 +92,15 @@ const UpcomingGames = () => {
                     game={selectedGame}
                     onClose={() => setSelectedGame(null)}
                     onSave={handleSaveGame}
+                />
+            )}
+
+            {selectedRsvpGame && (
+                <RsvpModal
+                    game={selectedRsvpGame}
+                    currentStatus={selectedRsvpGame.rsvpStatus}
+                    onClose={() => setSelectedRsvpGame(null)}
+                    onSubmit={handleRsvpSubmit}
                 />
             )}
         </div>
