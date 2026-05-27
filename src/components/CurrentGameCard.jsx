@@ -4,32 +4,22 @@ import { useNavigate } from "react-router-dom";
 import calendarIcon from "../assets/calendar_icon.svg";
 import locationIcon from "../assets/location_icon.svg";
 
+import { formatGameDate } from "../utils/formatGameDate";
+
 import "./CurrentGameCard.css";
 
 const CurrentGameCard = ({ game }) => {
     const navigate = useNavigate();
 
-    const startDate = new Date(game.startDateTime);
-    const endDate = new Date(game.endDateTime);
-
-    const formattedDate = startDate.toLocaleDateString("en-GB", {
-        weekday: "short",
-        month: "short",
-        day: "numeric",
-    });
-
-    const formattedStartTime = startDate.toLocaleTimeString("en-GB", {
-        hour: "numeric",
-        minute: "2-digit",
-    });
-
-    const formattedEndTime = endDate.toLocaleTimeString("en-GB", {
-        hour: "numeric",
-        minute: "2-digit",
-    });
+    const { formattedDate, startTime, endTime } = formatGameDate(
+        game.startDateTime,
+        game.endDateTime
+    );
 
     const visibleInvitees = game.invitees.slice(0, 3);
-    const extraInvitees = game.invitees.length - visibleInvitees.length;
+
+    const extraInvitees =
+        game.invitees.length - visibleInvitees.length;
 
     return (
         <div
@@ -41,14 +31,15 @@ const CurrentGameCard = ({ game }) => {
 
                 <div className="currentGame_time">
                     <img src={calendarIcon} alt="" />
+
                     <p>
-                        {formattedDate} • {formattedStartTime} -{" "}
-                        {formattedEndTime}
+                        {formattedDate} • {startTime} - {endTime}
                     </p>
                 </div>
 
                 <div className="currentGame_location">
                     <img src={locationIcon} alt="" />
+
                     <p>{game.location}</p>
                 </div>
 
@@ -64,6 +55,7 @@ const CurrentGameCard = ({ game }) => {
 
                     <div>
                         <p className="hostName">{game.hostName}</p>
+
                         <p className="hostRole">HOST</p>
                     </div>
                 </div>
@@ -75,8 +67,11 @@ const CurrentGameCard = ({ game }) => {
                                 key={invitee.id}
                                 className="inviteeImage"
                                 style={{
-                                    marginLeft: index === 0 ? "0" : "-10px",
-                                    zIndex: visibleInvitees.length - index,
+                                    marginLeft:
+                                        index === 0 ? "0" : "-10px",
+
+                                    zIndex:
+                                        visibleInvitees.length - index,
                                 }}
                                 title={invitee.name}
                             >
@@ -96,13 +91,17 @@ const CurrentGameCard = ({ game }) => {
                         ))}
 
                         {extraInvitees > 0 && (
-                            <div className="inviteeCount">+{extraInvitees}</div>
+                            <div className="inviteeCount">
+                                +{extraInvitees}
+                            </div>
                         )}
                     </div>
 
                     <p>
                         {game.invitees.length}{" "}
-                        {game.invitees.length === 1 ? "Invitee" : "Invitees"}
+                        {game.invitees.length === 1
+                            ? "Invitee"
+                            : "Invitees"}
                     </p>
                 </div>
             </div>

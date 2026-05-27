@@ -1,0 +1,134 @@
+.attendance_modal_overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.attendance_modal {
+    width: min(620px, 92vw);
+    max-height: 88vh;
+    overflow-y: auto;
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+}
+
+.attendance_modal_header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.attendance_modal_header h2 {
+    margin: 0;
+    color: #0f3d35;
+}
+
+.attendance_modal_header p {
+    margin: 0.35rem 0 0;
+    color: #64748b;
+}
+
+.attendance_close_btn {
+    border: none;
+    background: transparent;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #64748b;
+}
+
+.attendance_players {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.attendance_player_row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.8rem;
+}
+
+.attendance_player_info {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.attendance_player_info p {
+    margin: 0;
+    font-weight: 700;
+    color: #0f3d35;
+}
+
+.attendance_player_info span {
+    font-size: 0.75rem;
+    color: #94a3b8;
+}
+
+.attendance_options {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.attendance_options label {
+    padding: 0.55rem 0.85rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.55rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    color: #64748b;
+}
+
+.attendance_options input {
+    display: none;
+}
+
+.attendance_options label.selected.present {
+    background: #ecfdf5;
+    border-color: #047857;
+    color: #047857;
+}
+
+.attendance_options label.selected.no_show {
+    background: #fef2f2;
+    border-color: #dc2626;
+    color: #dc2626;
+}
+
+.attendance_modal_actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+}
+
+.attendance_cancel_btn,
+.attendance_save_btn {
+    padding: 0.75rem 1.2rem;
+    border-radius: 0.55rem;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.attendance_cancel_btn {
+    background: white;
+    border: 1px solid #d1d5db;
+    color: #475569;
+}
+
+.attendance_save_btn {
+    background: #047857;
+    border: 1px solid #047857;
+    color: white;
+}

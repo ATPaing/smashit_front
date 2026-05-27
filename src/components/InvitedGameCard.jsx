@@ -4,34 +4,23 @@ import calendarIcon from "../assets/calendar_icon.svg";
 import feesIcon from "../assets/fees_icon.svg";
 import locationIcon from "../assets/location_icon.svg";
 
+import { formatGameDate } from "../utils/formatGameDate";
+
 import "./InvitedGameCard.css";
 
 const InvitedGameCard = ({ game }) => {
-    const startDate = new Date(game.startDateTime);
-    const endDate = new Date(game.endDateTime);
+    const { formattedDate, startTime, endTime } = formatGameDate(
+        game.startDateTime,
+        game.endDateTime
+    );
 
-    const formattedDate = startDate.toLocaleDateString("en-GB", {
-        weekday: "short",
-        month: "short",
-        day: "numeric",
-    });
-
-    const formattedStartTime = startDate.toLocaleTimeString("en-GB", {
-        hour: "numeric",
-        minute: "2-digit",
-    });
-
-    const formattedEndTime = endDate.toLocaleTimeString("en-GB", {
-        hour: "numeric",
-        minute: "2-digit",
-    });
     return (
         <div className="invitedGameCard">
             <div className="invitedGameCard_content">
                 <div className="invitedGameCard_host">
                     <Avatar
                         name={game.hostName}
-                        size="38"
+                        size="45"
                         round={true}
                         fgColor="#ffffff"
                         colors={[
@@ -53,25 +42,28 @@ const InvitedGameCard = ({ game }) => {
 
                 <div className="invitedGameCard_detail">
                     <img src={calendarIcon} alt="" />
+
                     <p>
-                        {formattedDate} • {formattedStartTime} -{" "}
-                        {formattedEndTime}
+                        {formattedDate} • {startTime} - {endTime}
                     </p>
                 </div>
 
                 <div className="invitedGameCard_detail">
                     <img src={locationIcon} alt="" />
+
                     <p>{game.location}</p>
                 </div>
 
                 <div className="invitedGameCard_detail">
                     <img src={feesIcon} alt="" />
+
                     <p>{game.feeType}</p>
                 </div>
             </div>
 
             <div className="invitedGameCard_actions">
                 <button className="declineBtn">Decline</button>
+
                 <button className="acceptBtn">✓ Accept</button>
             </div>
         </div>

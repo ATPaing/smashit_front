@@ -1,0 +1,80 @@
+.past_games_page {
+    min-height: 100vh;
+    padding: 1em;
+    color: #0f3d35;
+}
+
+.past_games_header h1 {
+    margin: 0;
+    font-size: 2.2rem;
+    font-weight: 800;
+}
+
+.past_games_header p {
+    max-width: 500px;
+    margin-top: 0.4rem;
+    color: #5f6f6b;
+    line-height: 1.5;
+}
+
+.past_games_section {
+    margin-top: 2.5rem;
+}
+
+.past_games_section_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.past_games_section_header h2 {
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.past_games_section_header span {
+    font-size: 0.75rem;
+    color: #87928f;
+}
+
+.past_games_list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.load_more_btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 2.5rem auto 0;
+    padding: 0.8rem 1.6rem;
+    border: 1px solid #8fa6a0;
+    border-radius: 0.7rem;
+    background: white;
+    color: #0f3d35;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.load_more_btn:hover {
+    background: #3e4f4a;
+    color: white;
+}
+
+.loading_spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid #cbd5e1;
+    border-top-color: #0f3d35;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

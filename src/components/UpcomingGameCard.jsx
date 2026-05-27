@@ -4,29 +4,17 @@ import locationIcon from "../assets/location_icon.svg";
 import clockIcon from "../assets/clock.svg";
 import personIcon from "../assets/person_icon.svg";
 
+import { formatGameDate } from "../utils/formatGameDate";
+
 const UpcomingGameCard = ({ game, onEdit, onRespond }) => {
     const navigate = useNavigate();
 
     const isHost = game.role === "host";
 
-    const startDate = new Date(game.startDateTime);
-    const endDate = new Date(game.endDateTime);
-
-    const month = startDate
-        .toLocaleString("en-US", { month: "short" })
-        .toUpperCase();
-
-    const day = startDate.getDate();
-
-    const startTime = startDate.toLocaleTimeString("en-GB", {
-        hour: "2-digit",
-        minute: "2-digit",
-    });
-
-    const endTime = endDate.toLocaleTimeString("en-GB", {
-        hour: "2-digit",
-        minute: "2-digit",
-    });
+    const { month, day, startTime, endTime } = formatGameDate(
+        game.startDateTime,
+        game.endDateTime
+    );
 
     const handleCardClick = () => {
         navigate(`/dashboard/games/${game.id}`);
@@ -105,10 +93,13 @@ const UpcomingGameCard = ({ game, onEdit, onRespond }) => {
                         </button>
                     </>
                 ) : (
-                    <button className="rsvp_btn" onClick={ (e) => {
-                        e.stopPropagation();
-                        onRespond();
-                    }}>
+                    <button
+                        className="rsvp_btn"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onRespond();
+                        }}
+                    >
                         Update RSVP
                     </button>
                 )}

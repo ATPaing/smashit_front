@@ -43,10 +43,10 @@
 
 .invitedGameCard h3 {
     color: #012d1d;
-    font-size: 1.35rem;
+    font-size: 1.2rem;
     /* margin-bottom: 1em; */
 
-    min-height: 68px;
+    min-height: 40px;
 
     display: flex;
     align-items: flex-start;
