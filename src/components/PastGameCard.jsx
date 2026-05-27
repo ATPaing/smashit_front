@@ -49,8 +49,8 @@ const PastGameCard = ({ game, onMarkAttendance }) => {
                 <div className="past_game_avatars">
                     {game.players.slice(0, 4).map((player, index) => (
                         <Avatar
-                            key={player}
-                            name={player}
+                            key={player.id}
+                            name={player.name}
                             size="26"
                             round
                             textSizeRatio={2}
@@ -108,8 +108,7 @@ const PastGameCard = ({ game, onMarkAttendance }) => {
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation();
-
-                                        console.log("Edit");
+                                        onMarkAttendance();
                                     }}
                                 >
                                     Edit
