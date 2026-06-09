@@ -8,6 +8,11 @@
   background: white;
   border-radius: 0.9rem;
   border-left: 4px solid #3b82f6;
+  cursor: pointer;
+}
+
+.past_game_card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .past_game_card_host {

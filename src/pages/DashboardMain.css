@@ -1,7 +1,6 @@
 .dashboard_main_wrapper {
     display: flex;
-        height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
 }
 
 .sidebar {
@@ -9,7 +8,8 @@
     flex-direction: column;
     width: 250px;
     height: 100vh;
-    /* border: 1px solid #ccc; */
+    position: sticky;
+    top: 0;
 }
 
 .sidebar_header {
@@ -69,6 +69,8 @@
 
 .dashboard_content {
     padding: 1em;
-    background-color: #E4F1EA;
+    background-color: #e4f1ea;
     width: 100%;
+    min-height: 100vh;
+    overflow-y: auto;
 }

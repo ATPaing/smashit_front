@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ErrorBox from "./ErrorBox";
 import "./MarkAttendanceModal.css";
 
 const AttendanceModal = ({ gameId, players, onClose, onSubmit }) => {
@@ -12,7 +13,10 @@ const AttendanceModal = ({ gameId, players, onClose, onSubmit }) => {
         return initialAttendance;
     });
 
+    const [error, setError] = useState("");
+
     const handleAttendanceChange = (playerId, status) => {
+        setError("");
         setAttendance((prev) => ({
             ...prev,
             [playerId]: status,
@@ -21,6 +25,15 @@ const AttendanceModal = ({ gameId, players, onClose, onSubmit }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        const hasMissingAttendance = players.some(
+            (player) => !attendance[player.id],
+        );
+
+        if (hasMissingAttendance) {
+            setError("Please mark attendance for all players.");
+            return;
+        }
 
         const attendanceData = players.map((player) => ({
             playerId: player.id,
@@ -59,7 +72,7 @@ const AttendanceModal = ({ gameId, players, onClose, onSubmit }) => {
                                     onClick={() =>
                                         handleAttendanceChange(
                                             player.id,
-                                            "present"
+                                            "present",
                                         )
                                     }
                                 >
@@ -76,7 +89,7 @@ const AttendanceModal = ({ gameId, players, onClose, onSubmit }) => {
                                     onClick={() =>
                                         handleAttendanceChange(
                                             player.id,
-                                            "absent"
+                                            "absent",
                                         )
                                     }
                                 >
@@ -86,15 +99,13 @@ const AttendanceModal = ({ gameId, players, onClose, onSubmit }) => {
                         </div>
                     ))}
                 </div>
-
+                {error && <ErrorBox message={error} />}
                 <div className="attendance_modal_footer">
                     <button type="button" onClick={onClose}>
                         Cancel
                     </button>
 
-                    <button type="submit">
-                        Save Attendance
-                    </button>
+                    <button type="submit">Save Attendance</button>
                 </div>
             </form>
         </div>
