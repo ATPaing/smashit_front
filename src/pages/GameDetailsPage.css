@@ -142,7 +142,6 @@
 }
 
 .invite_input_row button,
-.suggestions button,
 .quick_actions button {
     border: none;
     border-radius: 14px;
@@ -153,6 +152,13 @@
     cursor: pointer;
 }
 
+.invite_input_row button:hover,
+.quick_actions button:hover {
+    background: #1e40af;
+}
+
+
+/* 
 .suggestions {
     display: flex;
     flex-wrap: wrap;
@@ -163,7 +169,7 @@
 .suggestions button {
     background: #eef2ff;
     color: #3730a3;
-}
+} */
 
 .game_content_grid {
     display: grid;
@@ -274,6 +280,10 @@
     background: #f8fafc;
     border-radius: 16px;
     padding: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .summary_box span {
@@ -362,7 +372,6 @@
 .invite_dropdown button:hover {
     background: #f1f5f9;
 }
-
 
 .invite_error_box {
     margin-top: 12px;

@@ -1,111 +1,111 @@
 .past_game_card {
-  display: grid;
-  grid-template-columns: 90px 1fr 220px;
-  align-items: center;
-  gap: 1.5rem;
-  min-height: 110px;
-  padding: 1.2rem 1.5rem;
-  background: white;
-  border-radius: 0.9rem;
-  border-left: 4px solid #3b82f6;
-  cursor: pointer;
+    display: grid;
+    grid-template-columns: 90px 1fr 220px;
+    align-items: center;
+    gap: 1.5rem;
+    min-height: 110px;
+    padding: 1.2rem 1.5rem;
+    background: white;
+    border-radius: 0.9rem;
+    border-left: 4px solid #3b82f6;
+    cursor: pointer;
 }
 
 .past_game_card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .past_game_card_host {
-  border-left-color: #ef4444;
+    border-left-color: #ef4444;
 }
 
 .past_game_card_host:has(.recorded) {
-  border-left-color: #047857;
+    border-left-color: #047857;
 }
 
 .past_game_card_participant {
-  border-left-color: #3b82f6;
+    border-left-color: #3b82f6;
 }
 
 .past_game_date {
-  text-align: center;
-  background: #eef4ff;
+    text-align: center;
+    background: #eef4ff;
     padding: 0.8rem;
     border-radius: 0.7rem;
 }
 
 .past_game_date span {
-  display: block;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #6b7280;
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #6b7280;
 }
 
 .past_game_date strong {
-  display: block;
-  font-size: 2rem;
-  line-height: 1;
-  color: #064e3b;
+    display: block;
+    font-size: 2rem;
+    line-height: 1;
+    color: #064e3b;
 }
 
 .past_game_date small {
-  font-size: 0.75rem;
-  color: #6b7280;
+    font-size: 0.75rem;
+    color: #6b7280;
 }
 
 .past_game_title_row {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
 }
 
 .past_game_title_row h3 {
-  margin: 0;
-  font-size: 1rem;
-  color: #0f3d35;
+    margin: 0;
+    font-size: 1rem;
+    color: #0f3d35;
 }
 
 .past_game_badge {
-  padding: 0.25rem 0.45rem;
-  border-radius: 0.25rem;
-  font-size: 0.6rem;
-  font-weight: 800;
+    padding: 0.25rem 0.45rem;
+    border-radius: 0.25rem;
+    font-size: 0.6rem;
+    font-weight: 800;
 }
 
 .past_game_badge.host {
-  background: #fee2e2;
-  color: #dc2626;
+    background: #fee2e2;
+    color: #dc2626;
 }
 
 .past_game_badge.participant {
-  background: #dbeafe;
-  color: #2563eb;
+    background: #dbeafe;
+    color: #2563eb;
 }
 
 .past_game_meta {
-  display: flex;
-  gap: 1rem;
-  margin-top: 0.55rem;
-  font-size: 0.78rem;
-  color: #66736f;
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.55rem;
+    font-size: 0.78rem;
+    color: #66736f;
 }
 
 .past_game_avatars {
-  display: flex;
-  align-items: center;
-  margin-top: 0.7rem;
+    display: flex;
+    align-items: center;
+    margin-top: 0.7rem;
 }
 
 .past_game_avatars > div {
-  margin-right: -0.45rem;
-  border: 2px solid white;
+    margin-right: -0.45rem;
+    border: 2px solid white;
 }
 
 .extra_players {
-  margin-left: 0.6rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #475569;
+    margin-left: 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #475569;
 }
 
 .past_game_action {
@@ -116,69 +116,68 @@
 }
 
 .attendance_status {
-
-  padding: 1rem;
-  border-radius: 0.8rem;
-  width: max-content;
+    padding: 1rem;
+    border-radius: 0.8rem;
+    width: max-content;
 }
 
 .attendance_status p {
-  margin: 0 0 0.7rem;
-  font-size: 0.78rem;
-  font-weight: 800;
-  width: max-content;
+    margin: 0 0 0.7rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    width: max-content;
 }
 
 .attendance_status.incomplete {
-  background: #fef2f2;
-  color: #dc2626;
+    background: #fef2f2;
+    color: #dc2626;
 }
 
 .attendance_status.incomplete button {
-  background: #dc2626;
-  color: white;
+    background: #dc2626;
+    color: white;
 }
 
 .attendance_status.incomplete button:hover {
-  background: #b91c1c;
+    background: #b91c1c;
 }
 
 .attendance_status.recorded {
-  background: #ecfdf5;
-  color: #047857;
+    background: #ecfdf5;
+    color: #047857;
 }
 
 .attendance_status.recorded button {
-  background: white;
-  color: #047857;
-  border: 1px solid #047857;
+    background: white;
+    color: #047857;
+    border: 1px solid #047857;
 }
 
 .attendance_status.recorded button:hover {
-  background: #047857;
-  color: white;
+    background: #047857;
+    color: white;
 }
 
 .attendance_status button,
 .view_details_btn {
-  width: 100%;
-  padding: 0.6rem 1rem;
-  border: none;
-  border-radius: 0.45rem;
-  font-weight: 800;
-  cursor: pointer;
+    width: 100%;
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: 0.45rem;
+    font-weight: 800;
+    cursor: pointer;
 }
 
 .view_details_btn {
-  width: auto;
-  border: 1px solid #d1d5db;
-  background: white;
-  color: #0f3d35;
+    width: auto;
+    border: 1px solid #d1d5db;
+    background: white;
+    color: #0f3d35;
 }
 
 .view_details_btn:hover {
-  background: #3e4f4a;
-  color: white;
+    background: #3e4f4a;
+    color: white;
 }
 
 .view_details_text {
