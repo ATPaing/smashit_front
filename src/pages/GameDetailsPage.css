@@ -26,6 +26,46 @@
     color: #64748b;
 }
 
+.breadcrumb_status {
+    display: flex;
+    align-items: center;
+    gap: 0.45em;
+    margin-left: auto;
+    background-color: #4e4e4e;
+    padding: 6px 12px;
+    border-radius: 999px;
+}
+
+.breadcrumb_status .breadcrumb_status_indicator {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+
+.breadcrumb_status .upcoming {
+    background: #fbbf24;
+}
+
+.breadcrumb_status .ongoing {
+    background: #22c55e;
+}
+
+.breadcrumb_status .completed {
+    background: #6492d1;
+}
+
+.breadcrumb_status .cancelled {
+    background: #ef4444; ;
+}
+
+
+.breadcrumb_status p {
+    color: rgb(239, 239, 239);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
 .game_title_area {
     background: linear-gradient(135deg, #2563eb, #7c3aed);
     color: white;

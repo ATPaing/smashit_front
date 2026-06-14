@@ -18,7 +18,7 @@ const avatarColors = ["#047857", "#2563EB", "#7C3AED", "#BE185D", "#C2410C"];
 
 const sampleGame = {
     id: "SMASH-2026-084",
-    status: "upcoming",
+    status: "completed",
     title: "Advanced Doubles Drill",
     description:
         "Competitive doubles training session focused on rotation, defense, and fast drive exchanges.",
@@ -109,6 +109,13 @@ const GameDetailsPage = () => {
                 <span>/</span>
 
                 <span>{game.title}</span>
+
+                <div className='breadcrumb_status'>
+                    <div className={`breadcrumb_status_indicator ${game.status}`}>
+
+                    </div>
+                    <p>{game.status}</p>
+                </div>
             </div>
 
             <section className="game_title_area">

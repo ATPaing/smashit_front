@@ -1,6 +1,9 @@
 import { useState } from "react";
 import DatePicker from "react-datepicker";
+
 import { useAuth } from "../hooks/useAuth";
+import {useGamesContext} from "../hooks/useGameContext";
+
 import { toast } from "react-toastify";
 
 import ErrorBox from "./ErrorBox";
@@ -12,6 +15,7 @@ import "./CreateGameModal.css";
 
 
 function CreateGameModal({ onClose }) {
+    const { refreshGames } = useGamesContext();
     const { token } = useAuth();
 
     const [error, setError] = useState(null);
@@ -60,11 +64,11 @@ function CreateGameModal({ onClose }) {
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.message);
+                throw new Error (data.message);
             }
 
             toast.success("Game created successfully!");
-
+            await refreshGames();
             onClose();
         } catch (err) {
             setError(err.message);

@@ -4,55 +4,40 @@ import UpcomingGameCard from "../components/UpcomingGameCard";
 import EditGameModal from "../components/EditGameModal";
 import RsvpModal from "../components/RsvpModal";
 
+import { useAuth } from "../hooks/useAuth";
+import { useGamesContext } from "../hooks/useGameContext";
+
 import "./UpcomingGames.css";
 
 const UpcomingGames = () => {
-    const [selectedGame, setSelectedGame] = useState(null);
+    const { user } = useAuth();
+    const { games, setGames, isLoadingGames } = useGamesContext();
 
+    const [selectedGame, setSelectedGame] = useState(null);
     const [selectedRsvpGame, setSelectedRsvpGame] = useState(null);
 
-    const [games, setGames] = useState([
-        {
-            id: 1,
-            title: "Friday Night Doubles",
-            startDateTime: "2026-10-24T19:00:00",
-            endDateTime: "2026-10-24T21:00:00",
-            location: "City Sports Center",
-            role: "host",
-            playersJoined: 3,
-        },
-        {
-            id: 2,
-            title: "Advanced Training Session",
-            startDateTime: "2026-10-28T10:00:00",
-            endDateTime: "2026-10-28T12:00:00",
-            hostName: "Coach Elena",
-            location: "Westside Sports Hall",
-            role: "guest",
-            rsvpStatus: "going",
-            playersJoined: 5,
-        },
-        {
-            id: 3,
-            title: "Sunday Smash Session",
-            startDateTime: "2026-11-02T14:00:00",
-            endDateTime: "2026-11-02T17:00:00",
-            location: "Manchester Badminton Arena",
-            role: "host",
-            playersJoined: 6,
-        },
-        {
-            id: 4,
-            title: "Beginner Friendly Match",
-            startDateTime: "2026-11-05T18:30:00",
-            endDateTime: "2026-11-05T20:00:00",
-            hostName: "James Carter",
-            location: "North Community Court",
-            role: "guest",
-            rsvpStatus: "not_sure",
-            playersJoined: 4,
-        },
-    ]);
+    const upcomingGames = games
+        .filter((game) => new Date(game.startTime) > new Date())
+        .map((game) => {
+            const myInvitation = game.invitation?.find(
+                (invite) => invite.userId === user?.id,
+            );
+
+            return {
+                id: game.id,
+                title: game.name,
+                startDateTime: game.startTime,
+                endDateTime: game.endTime,
+                location: game.location,
+                hostName: game.host?.name,
+                role: game.hostId === user?.id ? "host" : "guest",
+                rsvpStatus: myInvitation?.status?.toLowerCase() || null,
+                playersJoined:
+                    game.invitation?.filter(
+                        (invite) => invite.status === "ACCEPTED",
+                    ).length || 0,
+            };
+        });
 
     const handleSaveGame = (updatedGame) => {
         setGames((prevGames) =>
@@ -60,6 +45,8 @@ const UpcomingGames = () => {
                 game.id === updatedGame.id ? updatedGame : game,
             ),
         );
+
+        setSelectedGame(null);
     };
 
     const handleRsvpSubmit = ({ gameId, rsvpStatus }) => {
@@ -73,7 +60,17 @@ const UpcomingGames = () => {
                     : game,
             ),
         );
+
+        setSelectedRsvpGame(null);
     };
+
+    if (isLoadingGames) {
+        return (
+            <div className="upcomingGamesPage_outlet">
+                <p>Loading games...</p>
+            </div>
+        );
+    }
 
     return (
         <div className="upcomingGamesPage_outlet">
@@ -84,7 +81,8 @@ const UpcomingGames = () => {
                     and prepare for your upcoming games.
                 </p>
             </div>
-            {games.map((game) => (
+
+            {upcomingGames.map((game) => (
                 <UpcomingGameCard
                     key={game.id}
                     game={game}
