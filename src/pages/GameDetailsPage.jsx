@@ -1,7 +1,7 @@
-import { useState } from "react";
-// import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
 
-import { Link } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 import { toast } from "react-toastify";
 import { formatGameDate } from "../utils/formatGameDate";
@@ -16,67 +16,54 @@ import "./GameDetailsPage.css";
 
 const avatarColors = ["#047857", "#2563EB", "#7C3AED", "#BE185D", "#C2410C"];
 
-const sampleGame = {
-    id: "SMASH-2026-084",
-    status: "completed",
-    title: "Advanced Doubles Drill",
-    description:
-        "Competitive doubles training session focused on rotation, defense, and fast drive exchanges.",
-    location: {
-        name: "Downtown Badminton Club",
-        court: "Court 3",
-    },
-    startTime: "2026-10-24T18:30:00",
-    endTime: "2026-10-24T20:00:00",
-    feeType: "Shared Cost",
-    minReliability: 70,
-    host: {
-        id: 1,
-        name: "Aung",
-        reliability: 96,
-    },
-    players: [
-        {
-            id: 1,
-            name: "Aung",
-            role: "Host",
-            rsvpStatus: "accepted",
-            attendanceStatus: "present",
-        },
-        {
-            id: 2,
-            name: "Sarah O.",
-            role: "Invitee",
-            rsvpStatus: "accepted",
-            attendanceStatus: "present",
-        },
-        {
-            id: 3,
-            name: "Marcus T.",
-            role: "Invitee",
-            rsvpStatus: "accepted",
-            attendanceStatus: "absent",
-        },
-        {
-            id: 4,
-            name: "Chloe W.",
-            role: "Invitee",
-            rsvpStatus: "pending",
-            attendanceStatus: "",
-        },
-    ],
-};
-
-const currentUser = {
-    id: 1,
-};
-
 const GameDetailsPage = () => {
-    // const { gameId } = useParams();
+    const { gameId } = useParams();
+    const {token} = useAuth();
 
-    const [game, setGame] = useState(sampleGame);
+    const [game, setGame] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
-    const isHost = game.host.id === currentUser.id;
+    useEffect(() => {
+        const fetchGame = async () => {
+            try {
+
+                const res = await fetch(
+                    `http://localhost:3000/game/${gameId}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    },
+                );
+
+                const data = await res.json();
+                console.log("Fetched game data:", data);
+                if (!res.ok) {
+                    toast.error(data.message || "Failed to fetch game");
+                    return;
+                }
+
+                setGame(data.game);
+            } catch (err) {
+                console.error(err);
+                toast.error("Something went wrong");
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchGame();
+    }, [gameId]);
+
+    if (isLoading) {
+        return <main className="game_details_page">Loading game...</main>;
+    }
+
+    if (!game) {
+        return <main className="game_details_page">Game not found.</main>;
+    }
+
+    const isHost = game.currentUserRole === "HOST";
 
     const { formattedDate, startTime, endTime } = formatGameDate(
         game.startTime,
@@ -110,10 +97,11 @@ const GameDetailsPage = () => {
 
                 <span>{game.title}</span>
 
-                <div className='breadcrumb_status'>
-                    <div className={`breadcrumb_status_indicator ${game.status}`}>
+                <div className="breadcrumb_status">
+                    <div
+                        className={`breadcrumb_status_indicator ${game.status}`}
+                    ></div>
 
-                    </div>
                     <p>{game.status}</p>
                 </div>
             </div>
@@ -128,8 +116,6 @@ const GameDetailsPage = () => {
                 </div>
 
                 <h1>{game.title}</h1>
-
-                <p>{game.description}</p>
             </section>
 
             <section className="game_info_grid">
@@ -137,7 +123,7 @@ const GameDetailsPage = () => {
                     icon="📍"
                     label="Location"
                     title={game.location.name}
-                    subtitle={game.location.court}
+                    subtitle={game.location.court || "Court not specified"}
                 />
 
                 <InfoCard

@@ -28,7 +28,7 @@ const GameProvider = ({ children }) => {
                 }
 
                 const data = await response.json();
-
+                console.log(data)
                 setGames(data.games);
             } catch (error) {
                 console.error(error);

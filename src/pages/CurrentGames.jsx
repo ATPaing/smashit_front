@@ -22,6 +22,7 @@ const CurrentGames = () => {
             endDateTime: game.endTime,
             location: game.location,
             hostName: game.host?.name || "Unknown host",
+            minReliabilityScore: game.minReliabilityScore,
             invitees:
                 game.invitation?.map((invite) => ({
                     id: invite.user?.id || invite.userId,

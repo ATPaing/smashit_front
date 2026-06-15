@@ -10,7 +10,7 @@ import { useGamesContext } from "../hooks/useGameContext";
 import "./UpcomingGames.css";
 
 const UpcomingGames = () => {
-    const { user } = useAuth();
+    const { user, token } = useAuth();
     const { games, setGames, isLoadingGames } = useGamesContext();
 
     const [selectedGame, setSelectedGame] = useState(null);
@@ -32,6 +32,7 @@ const UpcomingGames = () => {
                 hostName: game.host?.name,
                 role: game.hostId === user?.id ? "host" : "guest",
                 rsvpStatus: myInvitation?.status?.toLowerCase() || null,
+                minReliabilityScore: game.minReliabilityScore,
                 playersJoined:
                     game.invitation?.filter(
                         (invite) => invite.status === "ACCEPTED",
@@ -39,16 +40,45 @@ const UpcomingGames = () => {
             };
         });
 
-    const handleSaveGame = (updatedGame) => {
-        setGames((prevGames) =>
-            prevGames.map((game) =>
-                game.id === updatedGame.id ? updatedGame : game,
-            ),
-        );
+    const handleSaveGame = async (updatedGame) => {
+        try {
+            const res = await fetch(
+                `http://localhost:3000/game/${updatedGame.id}`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({
+                        name: updatedGame.title,
+                        location: updatedGame.location,
+                        startTime: updatedGame.startDateTime,
+                        endTime: updatedGame.endDateTime,
+                        minReliabilityScore: updatedGame.minReliabilityScore,
+                    }),
+                },
+            );
 
-        setSelectedGame(null);
+            const data = await res.json();
+
+            if (!res.ok) {
+                alert(data.message || "Failed to update game");
+                return;
+            }
+
+            setGames((prevGames) =>
+                prevGames.map((game) =>
+                    game.id === data.game.id ? data.game : game,
+                ),
+            );
+
+            setSelectedGame(null);
+        } catch (err) {
+            console.error(err);
+            alert("Something went wrong");
+        }
     };
-
     const handleRsvpSubmit = ({ gameId, rsvpStatus }) => {
         setGames((prevGames) =>
             prevGames.map((game) =>
