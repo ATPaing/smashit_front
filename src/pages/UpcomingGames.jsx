@@ -3,6 +3,7 @@ import { useState } from "react";
 import UpcomingGameCard from "../components/UpcomingGameCard";
 import EditGameModal from "../components/EditGameModal";
 import RsvpModal from "../components/RsvpModal";
+import ConfirmationModal from "../components/ConfirmationModal";
 
 import { useAuth } from "../hooks/useAuth";
 import { useGamesContext } from "../hooks/useGameContext";
@@ -15,9 +16,14 @@ const UpcomingGames = () => {
 
     const [selectedGame, setSelectedGame] = useState(null);
     const [selectedRsvpGame, setSelectedRsvpGame] = useState(null);
+    const [selectedCancelGame, setSelectedCancelGame] = useState(null);
+    const [isCancelling, setIsCancelling] = useState(false);
 
     const upcomingGames = games
-        .filter((game) => new Date(game.startTime) > new Date())
+        .filter(
+            (game) =>
+                !game.isCancelled && new Date(game.startTime) > new Date(),
+        )
         .map((game) => {
             const myInvitation = game.invitation?.find(
                 (invite) => invite.userId === user?.id,
@@ -37,8 +43,48 @@ const UpcomingGames = () => {
                     game.invitation?.filter(
                         (invite) => invite.status === "ACCEPTED",
                     ).length || 0,
+                isCancelled: game.isCancelled,
+                status: game.isCancelled ? "cancelled" : "upcoming",
             };
         });
+
+    const handleCancelGame = async () => {
+        if (!selectedCancelGame) return;
+
+        setIsCancelling(true);
+
+        try {
+            const res = await fetch(
+                `http://localhost:3000/game/${selectedCancelGame.id}/cancel`,
+                {
+                    method: "PUT",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                },
+            );
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                alert(data.message || "Failed to cancel game");
+                return;
+            }
+
+            setGames((prevGames) =>
+                prevGames.map((game) =>
+                    game.id === data.game.id ? data.game : game,
+                ),
+            );
+
+            setSelectedCancelGame(null);
+        } catch (err) {
+            console.error(err);
+            alert("Something went wrong");
+        } finally {
+            setIsCancelling(false);
+        }
+    };
 
     const handleSaveGame = async (updatedGame) => {
         try {
@@ -79,6 +125,7 @@ const UpcomingGames = () => {
             alert("Something went wrong");
         }
     };
+
     const handleRsvpSubmit = ({ gameId, rsvpStatus }) => {
         setGames((prevGames) =>
             prevGames.map((game) =>
@@ -118,6 +165,7 @@ const UpcomingGames = () => {
                     game={game}
                     onEdit={() => setSelectedGame(game)}
                     onRespond={() => setSelectedRsvpGame(game)}
+                    onCancel={() => setSelectedCancelGame(game)}
                 />
             ))}
 
@@ -135,6 +183,19 @@ const UpcomingGames = () => {
                     currentStatus={selectedRsvpGame.rsvpStatus}
                     onClose={() => setSelectedRsvpGame(null)}
                     onSubmit={handleRsvpSubmit}
+                />
+            )}
+
+            {selectedCancelGame && (
+                <ConfirmationModal
+                    title="Cancel game?"
+                    message={`Are you sure you want to cancel "${selectedCancelGame.title}"? This action cannot be undone.`}
+                    confirmText="Cancel Game"
+                    cancelText="Keep Game"
+                    variant="danger"
+                    isLoading={isCancelling}
+                    onConfirm={handleCancelGame}
+                    onClose={() => setSelectedCancelGame(null)}
                 />
             )}
         </div>

@@ -20,7 +20,9 @@ const PastGameCard = ({ game, onMarkAttendance }) => {
 
     return (
         <article
-            className={`past_game_card past_game_card_${game.role}`}
+            className={`past_game_card past_game_card_${game.role} ${
+                game.isCancelled ? "past_game_card_cancelled" : ""
+            }`}
             onClick={() => navigate(`/dashboard/games/${game.id}`)}
         >
             <div className="past_game_date">
@@ -36,6 +38,12 @@ const PastGameCard = ({ game, onMarkAttendance }) => {
                     <span className={`past_game_badge ${game.role}`}>
                         {game.role === "host" ? "HOST" : "PARTICIPANT"}
                     </span>
+
+                    {game.isCancelled && (
+                        <span className="past_game_badge cancelled">
+                            CANCELLED
+                        </span>
+                    )}
 
                     <h3>{game.title}</h3>
                 </div>
@@ -67,7 +75,17 @@ const PastGameCard = ({ game, onMarkAttendance }) => {
             </div>
 
             <div className="past_game_action">
-                {game.role === "host" &&
+                {game.isCancelled && (
+                    <button
+                        className="view_details_btn"
+                        onClick={handleViewDetails}
+                    >
+                        View Details
+                    </button>
+                )}
+                {
+                    !game.isCancelled &&
+                    game.role === "host" &&
                     game.attendanceStatus === "incomplete" && (
                         <>
                             <span
@@ -92,7 +110,9 @@ const PastGameCard = ({ game, onMarkAttendance }) => {
                         </>
                     )}
 
-                {game.role === "host" &&
+                {
+                    !game.isCancelled &&
+                    game.role === "host" &&
                     game.attendanceStatus === "recorded" && (
                         <>
                             <span

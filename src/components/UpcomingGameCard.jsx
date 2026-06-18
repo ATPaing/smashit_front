@@ -6,22 +6,30 @@ import personIcon from "../assets/person_icon.svg";
 
 import { formatGameDate } from "../utils/formatGameDate";
 
-const UpcomingGameCard = ({ game, onEdit, onRespond }) => {
+const UpcomingGameCard = ({ game, onEdit, onRespond, onCancel }) => {
     const navigate = useNavigate();
 
     const isHost = game.role === "host";
+    const isCancelled = game.isCancelled;
 
     const { month, day, startTime, endTime } = formatGameDate(
         game.startDateTime,
-        game.endDateTime
+        game.endDateTime,
     );
 
     const handleCardClick = () => {
+        if (isCancelled) return;
+
         navigate(`/dashboard/games/${game.id}`);
     };
 
     return (
-        <div className="upcomingGame_card" onClick={handleCardClick}>
+        <div
+            className={`upcomingGame_card ${
+                isCancelled ? "upcomingGame_card_cancelled" : ""
+            }`}
+            onClick={handleCardClick}
+        >
             <div className="upcomingGame_card_left">
                 <p>{month}</p>
                 <p>{day}</p>
@@ -55,11 +63,13 @@ const UpcomingGameCard = ({ game, onEdit, onRespond }) => {
                 </div>
 
                 <div className="upcomingGame_badges">
-                    {isHost ? (
+                    {isCancelled ? (
+                        <span className="cancelled_badge">CANCELLED</span>
+                    ) : isHost ? (
                         <span className="host_badge">HOST</span>
                     ) : (
                         <span className="guest_badge">
-                            GUEST • {game.rsvpStatus.toUpperCase()}
+                            GUEST • {game.rsvpStatus?.toUpperCase()}
                         </span>
                     )}
 
@@ -70,39 +80,40 @@ const UpcomingGameCard = ({ game, onEdit, onRespond }) => {
             </div>
 
             <div className="upcomingGame_card_right">
-                {isHost ? (
-                    <>
-                        <button
-                            className="edit_btn"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                onEdit();
-                            }}
-                        >
-                            Edit
-                        </button>
+                {!isCancelled &&
+                    (isHost ? (
+                        <>
+                            <button
+                                className="edit_btn"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    onEdit();
+                                }}
+                            >
+                                Edit
+                            </button>
 
+                            <button
+                                className="cancel_btn"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    onCancel();
+                                }}
+                            >
+                                Cancel
+                            </button>
+                        </>
+                    ) : (
                         <button
-                            className="cancel_btn"
+                            className="rsvp_btn"
                             onClick={(e) => {
                                 e.stopPropagation();
-                                console.log("Cancel game");
+                                onRespond();
                             }}
                         >
-                            Cancel
+                            Update RSVP
                         </button>
-                    </>
-                ) : (
-                    <button
-                        className="rsvp_btn"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onRespond();
-                        }}
-                    >
-                        Update RSVP
-                    </button>
-                )}
+                    ))}
             </div>
         </div>
     );

@@ -14,13 +14,15 @@ const PastGames = () => {
 
     const [isLoadingMore, setIsLoadingMore] = useState(false);
     const [selectedGame, setSelectedGame] = useState(null);
+    const [visibleCount, setVisibleCount] = useState(5);
 
     const pastGames = games
-        .filter((game) => new Date(game.endTime) < new Date())
+        .filter(
+            (game) => game.isCancelled || new Date(game.endTime) < new Date(),
+        )
         .sort(
             (a, b) =>
-                new Date(b.endTime).getTime() -
-                new Date(a.endTime).getTime(),
+                new Date(b.endTime).getTime() - new Date(a.endTime).getTime(),
         )
         .map((game) => {
             const players =
@@ -46,21 +48,27 @@ const PastGames = () => {
                 endTime: game.endTime,
                 players,
                 attendanceStatus,
+                isCancelled: game.isCancelled,
             };
         });
+
+    const visiblePastGames = pastGames.slice(0, visibleCount);
+
+    const hasMoreGames = visibleCount < pastGames.length;
 
     const handleSaveAttendance = (data) => {
         console.log(data);
         setSelectedGame(null);
     };
 
-    const handleLoadMore = () => {
+    const handleLoadMore = async () => {
         setIsLoadingMore(true);
 
-        setTimeout(() => {
-            console.log("Load more games here");
+        try {
+            setVisibleCount((prev) => prev + 10);
+        } finally {
             setIsLoadingMore(false);
-        }, 1000);
+        }
     };
 
     if (isLoadingGames) {
@@ -86,11 +94,11 @@ const PastGames = () => {
             <section className="past_games_section">
                 <div className="past_games_section_header">
                     <h2>Match History</h2>
-                    <span>Showing last {pastGames.length} games</span>
+                    <span>Showing last {visiblePastGames.length} of {pastGames.length} games</span>
                 </div>
 
                 <div className="past_games_list">
-                    {pastGames.map((game) => (
+                    {visiblePastGames.map((game) => (
                         <PastGameCard
                             key={game.id}
                             game={game}
@@ -99,20 +107,22 @@ const PastGames = () => {
                     ))}
                 </div>
 
-                <button
-                    className="load_more_btn"
-                    onClick={handleLoadMore}
-                    disabled={isLoadingMore}
-                >
-                    {isLoadingMore ? (
-                        <>
-                            <span className="loading_spinner"></span>
-                            Loading...
-                        </>
-                    ) : (
-                        "Load More History"
-                    )}
-                </button>
+                {hasMoreGames && (
+                    <button
+                        className="load_more_btn"
+                        onClick={handleLoadMore}
+                        disabled={isLoadingMore}
+                    >
+                        {isLoadingMore ? (
+                            <>
+                                <span className="loading_spinner"></span>
+                                Loading...
+                            </>
+                        ) : (
+                            "Load More History"
+                        )}
+                    </button>
+                )}
             </section>
 
             {selectedGame && (

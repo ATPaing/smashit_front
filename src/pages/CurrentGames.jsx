@@ -8,10 +8,11 @@ const CurrentGames = () => {
     const { games, isLoadingGames } = useGamesContext();
 
     const now = new Date();
-
+    console.log(games)
     const currentGames = games
         .filter(
             (game) =>
+                !game.isCancelled &&
                 new Date(game.startTime) <= now &&
                 new Date(game.endTime) >= now,
         )

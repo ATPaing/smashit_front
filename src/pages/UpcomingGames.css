@@ -159,3 +159,18 @@
     color: #b91c1c;
     background-color: #fee2e2;
 }
+
+.upcomingGame_card_cancelled {
+    opacity: 0.45;
+    pointer-events: none;
+    cursor: default;
+}
+
+.cancelled_badge {
+    background: #dc2626;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}

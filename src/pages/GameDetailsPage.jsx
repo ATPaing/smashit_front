@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
 import { toast } from "react-toastify";
@@ -18,15 +18,14 @@ const avatarColors = ["#047857", "#2563EB", "#7C3AED", "#BE185D", "#C2410C"];
 
 const GameDetailsPage = () => {
     const { gameId } = useParams();
-    const {token} = useAuth();
-
+    const { token } = useAuth();
+    const navigate = useNavigate();
     const [game, setGame] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchGame = async () => {
             try {
-
                 const res = await fetch(
                     `http://localhost:3000/game/${gameId}`,
                     {
@@ -53,7 +52,7 @@ const GameDetailsPage = () => {
         };
 
         fetchGame();
-    }, [gameId]);
+    }, [gameId, token]);
 
     if (isLoading) {
         return <main className="game_details_page">Loading game...</main>;
@@ -88,73 +87,94 @@ const GameDetailsPage = () => {
         });
     };
 
+    console.log(game);
+
     return (
         <main className="game_details_page">
-            <div className="breadcrumb">
-                <Link to="/dashboard/games">Games</Link>
+            {game.isCancelled && (
+                <div className="cancelled_game_notice">
+                    <div className="cancelled_banner">
+                        ⚠ This game has been cancelled
+                    </div>
 
-                <span>/</span>
-
-                <span>{game.title}</span>
-
-                <div className="breadcrumb_status">
-                    <div
-                        className={`breadcrumb_status_indicator ${game.status}`}
-                    ></div>
-
-                    <p>{game.status}</p>
+                    <button
+                        className="back_to_games_btn"
+                        onClick={() => navigate("/dashboard/games")}
+                    >
+                        ← Back to Games
+                    </button>
                 </div>
+            )}
+
+            <div className={game.isCancelled ? "game_details_disabled" : ""}>
+                <div className="breadcrumb">
+                    <Link to="/dashboard/games">Games</Link>
+
+                    <span>/</span>
+
+                    <span>{game.title}</span>
+
+                    <div className="breadcrumb_status">
+                        <div
+                            className={`breadcrumb_status_indicator ${game.status}`}
+                        ></div>
+
+                        <p>{game.status}</p>
+                    </div>
+                </div>
+
+                <section className="game_title_area">
+                    <div>
+                        <span className={`game_status ${game.status}`}>
+                            {game.status}
+                        </span>
+
+                        <span className="game_ref">Ref: {game.id}</span>
+                    </div>
+
+                    <h1>{game.title}</h1>
+                </section>
+
+                <section className="game_info_grid">
+                    <InfoCard
+                        icon="📍"
+                        label="Location"
+                        title={game.location.name}
+                        subtitle={game.location.court || "Court not specified"}
+                    />
+
+                    <InfoCard
+                        icon="📅"
+                        label="Date & Time"
+                        title={formattedDate}
+                        subtitle={`${startTime} - ${endTime}`}
+                    />
+
+                    <InfoCard icon="💳" label="Fee Type" title={game.feeType} />
+
+                    <InfoCard
+                        icon="🛡️"
+                        label="Min Reliability"
+                        title={`${game.minReliability}`}
+                        subtitle="Required Score"
+                    />
+
+                    <HostCard host={game.host} avatarColors={avatarColors} />
+                </section>
+
+                {isHost && (
+                    <InvitePlayers onInviteSuccess={handleInviteSuccess} />
+                )}
+
+                <section className="game_content_grid">
+                    <PlayerAttendance
+                        players={game.players}
+                        avatarColors={avatarColors}
+                    />
+
+                    <MatchSummary players={game.players} />
+                </section>
             </div>
-
-            <section className="game_title_area">
-                <div>
-                    <span className={`game_status ${game.status}`}>
-                        {game.status}
-                    </span>
-
-                    <span className="game_ref">Ref: {game.id}</span>
-                </div>
-
-                <h1>{game.title}</h1>
-            </section>
-
-            <section className="game_info_grid">
-                <InfoCard
-                    icon="📍"
-                    label="Location"
-                    title={game.location.name}
-                    subtitle={game.location.court || "Court not specified"}
-                />
-
-                <InfoCard
-                    icon="📅"
-                    label="Date & Time"
-                    title={formattedDate}
-                    subtitle={`${startTime} - ${endTime}`}
-                />
-
-                <InfoCard icon="💳" label="Fee Type" title={game.feeType} />
-
-                <InfoCard
-                    icon="🛡️"
-                    label="Min Reliability"
-                    title={`${game.minReliability}`}
-                    subtitle="Required Score"
-                />
-
-                <HostCard host={game.host} avatarColors={avatarColors} />
-            </section>
-
-            {isHost && <InvitePlayers onInviteSuccess={handleInviteSuccess} />}
-
-            <section className="game_content_grid">
-                <PlayerAttendance
-                    players={game.players}
-                    avatarColors={avatarColors}
-                />
-
-                <MatchSummary players={game.players} />
-            </section>
         </main>
     );
 };
