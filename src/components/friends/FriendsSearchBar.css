@@ -1,0 +1,166 @@
+.friends_search_wrapper {
+    position: relative;
+    flex: 1;
+    max-width: 420px;
+}
+
+.friends_search_input_row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: white;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 0.65rem 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.friends_search_input_row_open {
+    border-color: #012d1d;
+    box-shadow: 0 0 0 3px rgba(1, 45, 29, 0.1);
+}
+
+.friends_search_icon {
+    color: #94a3b8;
+    font-size: 1.1rem;
+}
+
+.friends_search_input_row input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 0.95rem;
+    color: #012d1d;
+    background: transparent;
+}
+
+.friends_search_input_row input::placeholder {
+    color: #94a3b8;
+}
+
+.friends_search_selected {
+    margin-top: 0.4rem;
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+.friends_search_dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+    max-height: 280px;
+    overflow-y: auto;
+    z-index: 20;
+}
+
+.friends_search_message {
+    padding: 1rem;
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.friends_search_result {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background-color 0.15s ease;
+}
+
+.friends_search_result_selectable {
+    cursor: pointer;
+}
+
+.friends_search_result_selectable:hover,
+.friends_search_result_active {
+    background: #f0fdf4;
+}
+
+.friends_search_highlight {
+    background: #bbf7d0;
+    color: #012d1d;
+    padding: 0;
+    border-radius: 2px;
+}
+
+.friends_search_hint {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #64748b;
+    white-space: nowrap;
+}
+
+.friends_search_result:last-child {
+    border-bottom: none;
+}
+
+.friends_search_result_info {
+    min-width: 0;
+}
+
+.friends_search_result_name {
+    font-weight: 700;
+    color: #012d1d;
+    font-size: 0.9rem;
+}
+
+.friends_search_result_email {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-top: 0.1rem;
+}
+
+.friends_search_status {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.35rem 0.65rem;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.friends_search_status_friends {
+    background: #ecfdf5;
+    color: #166534;
+}
+
+.friends_search_status_pending {
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+.friends_search_accept_btn,
+.friends_search_reject_btn {
+    border: none;
+    border-radius: 8px;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.friends_search_inline_actions {
+    display: flex;
+    gap: 0.35rem;
+}
+
+.friends_search_accept_btn {
+    background: #012d1d;
+    color: white;
+}
+
+.friends_search_reject_btn {
+    background: #f1f5f9;
+    color: #334155;
+}
+
+.friends_search_accept_btn:disabled,
+.friends_search_reject_btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

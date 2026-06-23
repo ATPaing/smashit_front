@@ -1,0 +1,118 @@
+.friends_page {
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.friends_page_loading {
+    color: #64748b;
+    font-size: 1rem;
+}
+
+.friends_page_header {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.friends_page_header_text h1 {
+    font-size: 2rem;
+    color: #012d1d;
+    font-weight: 700;
+}
+
+.friends_page_header_text p {
+    font-size: 1rem;
+    color: #64748b;
+    margin-top: 0.35rem;
+}
+
+.friends_page_header_actions {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.friends_invite_btn {
+    padding: 0.75rem 1.25rem;
+    background-color: #012d1d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.2s ease;
+}
+
+.friends_invite_btn:hover:not(:disabled) {
+    background-color: #014d2b;
+}
+
+.friends_invite_btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.friends_section_card {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.friends_section_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.friends_section_header h2 {
+    font-size: 1.15rem;
+    color: #012d1d;
+    font-weight: 700;
+}
+
+.friends_new_badge {
+    background: #dbeafe;
+    color: #1e40af;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+}
+
+.friends_count_label {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.friends_empty_state {
+    color: #64748b;
+    font-size: 0.95rem;
+    padding: 1rem 0;
+}
+
+@media (max-width: 768px) {
+    .friends_page_header_actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .friends_search_wrapper {
+        max-width: none;
+    }
+
+    .friend_list_item {
+        flex-wrap: wrap;
+    }
+
+    .friend_list_item_left {
+        min-width: 100%;
+    }
+}

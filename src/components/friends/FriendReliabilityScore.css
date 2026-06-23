@@ -1,0 +1,39 @@
+.friend_reliability_score {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 180px;
+}
+
+.friend_reliability_label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 0.04em;
+}
+
+.friend_reliability_row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.friend_reliability_value {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #012d1d;
+    min-width: 2.5rem;
+}
+
+.friend_reliability_bar {
+    flex: 1;
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.friend_reliability_bar div {
+    height: 100%;
+    border-radius: 999px;
+}

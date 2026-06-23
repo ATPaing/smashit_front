@@ -1,0 +1,96 @@
+.friend_list_item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.friend_list_item:last-child {
+    border-bottom: none;
+}
+
+.friend_list_item_left {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    min-width: 200px;
+}
+
+.friend_avatar_wrapper {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.friend_presence_dot {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background: transparent;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.friend_list_item_name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #012d1d;
+}
+
+.friend_list_item_menu {
+    position: relative;
+    margin-left: auto;
+}
+
+.friend_list_item_menu_btn {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    color: #64748b;
+    font-size: 1.25rem;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.friend_list_item_menu_btn:hover {
+    background: #f1f5f9;
+    color: #012d1d;
+}
+
+.friend_list_item_dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    min-width: 150px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+    overflow: hidden;
+    z-index: 10;
+}
+
+.friend_list_item_dropdown button {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: none;
+    background: white;
+    text-align: left;
+    color: #dc2626;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.friend_list_item_dropdown button:hover:not(:disabled) {
+    background: #fef2f2;
+}
+
+.friend_list_item_dropdown button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

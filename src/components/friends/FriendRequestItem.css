@@ -1,0 +1,69 @@
+.friend_request_item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.friend_request_item:last-child {
+    border-bottom: none;
+}
+
+.friend_request_item_info {
+    flex: 1;
+    min-width: 0;
+}
+
+.friend_request_item_name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #012d1d;
+}
+
+.friend_request_item_email {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-top: 0.15rem;
+}
+
+.friend_request_item_actions {
+    display: flex;
+    gap: 0.6rem;
+}
+
+.friend_request_accept_btn,
+.friend_request_reject_btn {
+    padding: 0.65rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.friend_request_accept_btn {
+    background: #012d1d;
+    color: white;
+}
+
+.friend_request_accept_btn:hover:not(:disabled) {
+    background: #014d2b;
+    transform: translateY(-1px);
+}
+
+.friend_request_reject_btn {
+    background: #f1f5f9;
+    color: #334155;
+}
+
+.friend_request_reject_btn:hover:not(:disabled) {
+    background: #e2e8f0;
+}
+
+.friend_request_accept_btn:disabled,
+.friend_request_reject_btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
