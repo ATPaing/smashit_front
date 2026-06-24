@@ -8,11 +8,18 @@ import { formatGameDate } from "../utils/formatGameDate";
 
 import "./InvitedGameCard.css";
 
-const InvitedGameCard = ({ game }) => {
+const InvitedGameCard = ({
+    game,
+    onAccept,
+    onDecline,
+    isResponding,
+}) => {
     const { formattedDate, startTime, endTime } = formatGameDate(
         game.startDateTime,
-        game.endDateTime
+        game.endDateTime,
     );
+
+    const isPending = game.rsvpStatus?.toLowerCase() === "pending";
 
     return (
         <div className="invitedGameCard">
@@ -62,9 +69,31 @@ const InvitedGameCard = ({ game }) => {
             </div>
 
             <div className="invitedGameCard_actions">
-                <button className="declineBtn">Decline</button>
+                {isPending ? (
+                    <>
+                        <button
+                            type="button"
+                            className="declineBtn"
+                            onClick={() => onDecline(game.id)}
+                            disabled={isResponding}
+                        >
+                            {isResponding ? "..." : "Decline"}
+                        </button>
 
-                <button className="acceptBtn">✓ Accept</button>
+                        <button
+                            type="button"
+                            className="acceptBtn"
+                            onClick={() => onAccept(game.id)}
+                            disabled={isResponding}
+                        >
+                            {isResponding ? "..." : "✓ Accept"}
+                        </button>
+                    </>
+                ) : (
+                    <p className="invitedGameCard_status">
+                        Response: {game.rsvpStatus}
+                    </p>
+                )}
             </div>
         </div>
     );

@@ -2,7 +2,7 @@ import { useState } from "react";
 import ErrorBox from "./ErrorBox";
 import "./MarkAttendanceModal.css";
 
-const AttendanceModal = ({ gameId, players, onClose, onSubmit }) => {
+const AttendanceModal = ({ gameId, players, onClose, onSubmit, isSubmitting = false }) => {
     const [attendance, setAttendance] = useState(() => {
         const initialAttendance = {};
 
@@ -101,11 +101,13 @@ const AttendanceModal = ({ gameId, players, onClose, onSubmit }) => {
                 </div>
                 {error && <ErrorBox message={error} />}
                 <div className="attendance_modal_footer">
-                    <button type="button" onClick={onClose}>
+                    <button type="button" onClick={onClose} disabled={isSubmitting}>
                         Cancel
                     </button>
 
-                    <button type="submit">Save Attendance</button>
+                    <button type="submit" disabled={isSubmitting}>
+                        {isSubmitting ? "Saving..." : "Save Attendance"}
+                    </button>
                 </div>
             </form>
         </div>

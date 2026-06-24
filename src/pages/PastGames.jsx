@@ -1,20 +1,25 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 import MarkAttendanceModal from "../components/MarkAttendanceModal";
 import PastGameCard from "../components/PastGameCard";
 
 import { useAuth } from "../hooks/useAuth";
 import { useGamesContext } from "../hooks/useGameContext";
+import { mapBackendAttendanceToFrontend } from "../utils/mapAttendanceStatus";
 
 import "./PastGames.css";
 
+const API_BASE = "http://localhost:3000";
+
 const PastGames = () => {
-    const { user } = useAuth();
-    const { games, isLoadingGames } = useGamesContext();
+    const { user, token } = useAuth();
+    const { games, setGames, isLoadingGames } = useGamesContext();
 
     const [isLoadingMore, setIsLoadingMore] = useState(false);
     const [selectedGame, setSelectedGame] = useState(null);
     const [visibleCount, setVisibleCount] = useState(5);
+    const [isSavingAttendance, setIsSavingAttendance] = useState(false);
 
     const pastGames = games
         .filter(
@@ -26,12 +31,15 @@ const PastGames = () => {
         )
         .map((game) => {
             const players =
-                game.invitation?.map((invite) => ({
-                    id: invite.user?.id || invite.userId,
-                    name: invite.user?.name || "Unknown player",
-                    attendanceStatus:
-                        invite.attendanceStatus?.toLowerCase() || "",
-                })) || [];
+                game.invitation
+                    ?.filter((invite) => invite.status === "ACCEPTED")
+                    .map((invite) => ({
+                        id: invite.user?.id || invite.userId,
+                        name: invite.user?.name || "Unknown player",
+                        attendanceStatus: mapBackendAttendanceToFrontend(
+                            invite.attendanceStatus,
+                        ),
+                    })) || [];
 
             const attendanceStatus =
                 players.length > 0 &&
@@ -56,9 +64,58 @@ const PastGames = () => {
 
     const hasMoreGames = visibleCount < pastGames.length;
 
-    const handleSaveAttendance = (data) => {
-        console.log(data);
-        setSelectedGame(null);
+    const handleSaveAttendance = async ({ gameId, attendance }) => {
+        setIsSavingAttendance(true);
+
+        try {
+            const response = await fetch(
+                `${API_BASE}/game/${gameId}/attendance`,
+                {
+                    method: "PUT",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ attendance }),
+                },
+            );
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || "Failed to save attendance");
+            }
+
+            setGames((prevGames) =>
+                prevGames.map((game) => {
+                    if (game.id !== gameId) return game;
+
+                    return {
+                        ...game,
+                        invitation: game.invitation.map((invite) => {
+                            const updatedInvite = data.invitations.find(
+                                (item) => item.userId === invite.userId,
+                            );
+
+                            if (!updatedInvite) return invite;
+
+                            return {
+                                ...invite,
+                                attendanceStatus:
+                                    updatedInvite.attendanceStatus,
+                                user: updatedInvite.user || invite.user,
+                            };
+                        }),
+                    };
+                }),
+            );
+
+            toast.success("Attendance saved successfully");
+            setSelectedGame(null);
+        } catch (err) {
+            toast.error(err.message);
+        } finally {
+            setIsSavingAttendance(false);
+        }
     };
 
     const handleLoadMore = async () => {
@@ -94,7 +151,10 @@ const PastGames = () => {
             <section className="past_games_section">
                 <div className="past_games_section_header">
                     <h2>Match History</h2>
-                    <span>Showing last {visiblePastGames.length} of {pastGames.length} games</span>
+                    <span>
+                        Showing last {visiblePastGames.length} of{" "}
+                        {pastGames.length} games
+                    </span>
                 </div>
 
                 <div className="past_games_list">
@@ -131,6 +191,7 @@ const PastGames = () => {
                     players={selectedGame.players}
                     onClose={() => setSelectedGame(null)}
                     onSubmit={handleSaveAttendance}
+                    isSubmitting={isSavingAttendance}
                 />
             )}
         </main>

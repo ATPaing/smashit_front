@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 import UpcomingGameCard from "../components/UpcomingGameCard";
 import EditGameModal from "../components/EditGameModal";
@@ -7,8 +8,14 @@ import ConfirmationModal from "../components/ConfirmationModal";
 
 import { useAuth } from "../hooks/useAuth";
 import { useGamesContext } from "../hooks/useGameContext";
+import {
+    mapBackendStatusToRsvp,
+    mapRsvpToBackendStatus,
+} from "../utils/mapInvitationStatus";
 
 import "./UpcomingGames.css";
+
+const API_BASE = "http://localhost:3000";
 
 const UpcomingGames = () => {
     const { user, token } = useAuth();
@@ -18,6 +25,7 @@ const UpcomingGames = () => {
     const [selectedRsvpGame, setSelectedRsvpGame] = useState(null);
     const [selectedCancelGame, setSelectedCancelGame] = useState(null);
     const [isCancelling, setIsCancelling] = useState(false);
+    const [isUpdatingRsvp, setIsUpdatingRsvp] = useState(false);
 
     const upcomingGames = games
         .filter(
@@ -126,19 +134,51 @@ const UpcomingGames = () => {
         }
     };
 
-    const handleRsvpSubmit = ({ gameId, rsvpStatus }) => {
-        setGames((prevGames) =>
-            prevGames.map((game) =>
-                game.id === gameId
-                    ? {
-                          ...game,
-                          rsvpStatus,
-                      }
-                    : game,
-            ),
-        );
+    const handleRsvpSubmit = async ({ gameId, rsvpStatus }) => {
+        setIsUpdatingRsvp(true);
 
-        setSelectedRsvpGame(null);
+        try {
+            const status = mapRsvpToBackendStatus(rsvpStatus);
+
+            const response = await fetch(
+                `${API_BASE}/game/${gameId}/invitation/respond`,
+                {
+                    method: "PUT",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ status }),
+                },
+            );
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || "Failed to update RSVP");
+            }
+
+            setGames((prevGames) =>
+                prevGames.map((game) => {
+                    if (game.id !== gameId) return game;
+
+                    return {
+                        ...game,
+                        invitation: game.invitation.map((invite) =>
+                            invite.userId === user?.id
+                                ? { ...invite, status: data.invitation.status }
+                                : invite,
+                        ),
+                    };
+                }),
+            );
+
+            toast.success("RSVP updated successfully");
+            setSelectedRsvpGame(null);
+        } catch (err) {
+            toast.error(err.message);
+        } finally {
+            setIsUpdatingRsvp(false);
+        }
     };
 
     if (isLoadingGames) {
@@ -180,9 +220,12 @@ const UpcomingGames = () => {
             {selectedRsvpGame && (
                 <RsvpModal
                     game={selectedRsvpGame}
-                    currentStatus={selectedRsvpGame.rsvpStatus}
+                    currentStatus={mapBackendStatusToRsvp(
+                        selectedRsvpGame.rsvpStatus,
+                    )}
                     onClose={() => setSelectedRsvpGame(null)}
                     onSubmit={handleRsvpSubmit}
+                    isSubmitting={isUpdatingRsvp}
                 />
             )}
 

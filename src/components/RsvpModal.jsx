@@ -1,9 +1,9 @@
 import { useState } from "react";
 import "./RsvpModal.css";
 
-const RsvpModal = ({ game, currentStatus, onClose, onSubmit }) => {
+const RsvpModal = ({ game, currentStatus, onClose, onSubmit, isSubmitting = false }) => {
     const [selectedStatus, setSelectedStatus] = useState(
-        currentStatus || "not_sure"
+        currentStatus || "not_sure",
     );
 
     const handleSubmit = (e) => {
@@ -13,8 +13,6 @@ const RsvpModal = ({ game, currentStatus, onClose, onSubmit }) => {
             gameId: game.id,
             rsvpStatus: selectedStatus,
         });
-
-        onClose();
     };
 
     return (
@@ -117,12 +115,17 @@ const RsvpModal = ({ game, currentStatus, onClose, onSubmit }) => {
                         type="button"
                         onClick={onClose}
                         className="cancel_btn"
+                        disabled={isSubmitting}
                     >
                         Cancel
                     </button>
 
-                    <button type="submit" className="submit_btn">
-                        Save Response
+                    <button
+                        type="submit"
+                        className="submit_btn"
+                        disabled={isSubmitting}
+                    >
+                        {isSubmitting ? "Saving..." : "Save Response"}
                     </button>
                 </div>
             </form>

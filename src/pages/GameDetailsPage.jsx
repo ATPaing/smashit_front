@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
@@ -53,6 +53,11 @@ const GameDetailsPage = () => {
 
         fetchGame();
     }, [gameId, token]);
+
+    const invitedPlayerIds = useMemo(
+        () => game?.players.map((player) => player.id) ?? [],
+        [game?.players],
+    );
 
     if (isLoading) {
         return <main className="game_details_page">Loading game...</main>;
@@ -163,7 +168,15 @@ const GameDetailsPage = () => {
                 </section>
 
                 {isHost && (
-                    <InvitePlayers onInviteSuccess={handleInviteSuccess} />
+                    <InvitePlayers
+                        gameId={gameId}
+                        invitedPlayerIds={invitedPlayerIds}
+                        minReliabilityScore={game.minReliability}
+                        canInvite={
+                            game.status === "upcoming" && !game.isCancelled
+                        }
+                        onInviteSuccess={handleInviteSuccess}
+                    />
                 )}
 
                 <section className="game_content_grid">
