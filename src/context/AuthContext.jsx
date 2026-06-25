@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { AuthContext } from "./AuthContext.js";
+import { API_BASE } from "../config/api.js";
 
 
 const AuthProvider = ({ children }) => {
@@ -30,7 +31,7 @@ const AuthProvider = ({ children }) => {
             }
 
             try {
-                const response = await fetch("http://localhost:3000/auth/me", {
+                const response = await fetch(`${API_BASE}/auth/me`, {
                     headers: {
                         Authorization: `Bearer ${savedToken}`,
                     },

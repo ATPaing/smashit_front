@@ -7,10 +7,10 @@ import FriendRequestItem from "../components/friends/FriendRequestItem";
 import FriendsSearchBar from "../components/friends/FriendsSearchBar";
 
 import { useAuth } from "../hooks/useAuth";
+import { API_BASE } from "../config/api.js";
 
 import "./FriendsPage.css";
 
-const API_BASE = "http://localhost:3000";
 const MIN_SEARCH_LENGTH = 2;
 const DEBOUNCE_TIME = 500;
 

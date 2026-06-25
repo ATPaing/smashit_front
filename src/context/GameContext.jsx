@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import {GameContext} from "./gameContext";
+import { API_BASE } from "../config/api.js";
 
 const GameProvider = ({ children }) => {
     const { user } = useAuth();
@@ -17,7 +18,7 @@ const GameProvider = ({ children }) => {
             try {
                 const token = localStorage.getItem("token");
 
-                const response = await fetch("http://localhost:3000/game/all", {
+                const response = await fetch(`${API_BASE}/game/all`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -46,7 +47,7 @@ const GameProvider = ({ children }) => {
         try {
             const token = localStorage.getItem("token");
 
-            const response = await fetch("http://localhost:3000/game/all", {
+            const response = await fetch(`${API_BASE}/game/all`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

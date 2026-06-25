@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 
 // custon hooks
 import { useAuth } from "../hooks/useAuth";
+import { API_BASE } from "../config/api.js";
 
 // logo
 import visual_anchor from "../assets/visual_anchor.svg";
@@ -72,7 +73,7 @@ const SignUp = () => {
         }
 
         try {
-            const response = await fetch("http://localhost:3000/auth/signup", {
+            const response = await fetch(`${API_BASE}/auth/signup`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

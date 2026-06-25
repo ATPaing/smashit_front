@@ -12,10 +12,9 @@ import {
     mapBackendStatusToRsvp,
     mapRsvpToBackendStatus,
 } from "../utils/mapInvitationStatus";
+import { API_BASE } from "../config/api.js";
 
 import "./UpcomingGames.css";
-
-const API_BASE = "http://localhost:3000";
 
 const UpcomingGames = () => {
     const { user, token } = useAuth();
@@ -63,7 +62,7 @@ const UpcomingGames = () => {
 
         try {
             const res = await fetch(
-                `http://localhost:3000/game/${selectedCancelGame.id}/cancel`,
+                `${API_BASE}/game/${selectedCancelGame.id}/cancel`,
                 {
                     method: "PUT",
                     headers: {
@@ -97,7 +96,7 @@ const UpcomingGames = () => {
     const handleSaveGame = async (updatedGame) => {
         try {
             const res = await fetch(
-                `http://localhost:3000/game/${updatedGame.id}`,
+                `${API_BASE}/game/${updatedGame.id}`,
                 {
                     method: "PUT",
                     headers: {

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { API_BASE } from "../config/api.js";
 
 import { toast } from "react-toastify";
 import { formatGameDate } from "../utils/formatGameDate";
@@ -27,7 +28,7 @@ const GameDetailsPage = () => {
         const fetchGame = async () => {
             try {
                 const res = await fetch(
-                    `http://localhost:3000/game/${gameId}`,
+                    `${API_BASE}/game/${gameId}`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,

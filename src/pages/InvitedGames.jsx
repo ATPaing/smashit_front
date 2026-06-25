@@ -5,10 +5,9 @@ import InvitedGameCard from "../components/InvitedGameCard";
 
 import { useAuth } from "../hooks/useAuth";
 import { useGamesContext } from "../hooks/useGameContext";
+import { API_BASE } from "../config/api.js";
 
 import "./InvitedGames.css";
-
-const API_BASE = "http://localhost:3000";
 
 const InvitedGames = () => {
     const { user, token } = useAuth();

@@ -4,10 +4,9 @@ import { toast } from "react-toastify";
 
 import NotificationListItem from "../components/NotificationListItem";
 import { useAuth } from "../hooks/useAuth";
+import { API_BASE } from "../config/api.js";
 
 import "./NotificationsPage.css";
-
-const API_BASE = "http://localhost:3000";
 
 const NotificationsPage = () => {
     const { token } = useAuth();

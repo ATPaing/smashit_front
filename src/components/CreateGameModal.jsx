@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 
 import { useAuth } from "../hooks/useAuth";
 import {useGamesContext} from "../hooks/useGameContext";
+import { API_BASE } from "../config/api.js";
 
 import { toast } from "react-toastify";
 
@@ -52,7 +53,7 @@ function CreateGameModal({ onClose }) {
         };
 
         try {
-            const response = await fetch("http://localhost:3000/game/create", {
+            const response = await fetch(`${API_BASE}/game/create`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -14,8 +14,8 @@ import CreateGameModal from "../components/CreateGameModal";
 import UpcomingEventCard from "../components/UpcomingEventCard";
 import DashMetrices from "../components/DashboardMetrices";
 import { useAuth } from "../hooks/useAuth";
+import { API_BASE } from "../config/api.js";
 
-const API_BASE = "http://localhost:3000";
 const ACTIVITY_LIMIT = 3;
 
 const DashboardHome = () => {

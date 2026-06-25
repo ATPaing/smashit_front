@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../hooks/useAuth";
+import { API_BASE } from "../config/api.js";
 
 import reliabilityIcon from "../assets/reliability_icon.svg";
 import gamesIcon from "../assets/games.svg";
@@ -18,7 +19,7 @@ const DashMetrices = () => {
             try {
 
                 const response = await fetch(
-                    "http://localhost:3000/auth/me",
+                    `${API_BASE}/auth/me`,
                     {
                         method: "GET",
 

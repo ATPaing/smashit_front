@@ -7,10 +7,9 @@ import PastGameCard from "../components/PastGameCard";
 import { useAuth } from "../hooks/useAuth";
 import { useGamesContext } from "../hooks/useGameContext";
 import { mapBackendAttendanceToFrontend } from "../utils/mapAttendanceStatus";
+import { API_BASE } from "../config/api.js";
 
 import "./PastGames.css";
-
-const API_BASE = "http://localhost:3000";
 
 const PastGames = () => {
     const { user, token } = useAuth();

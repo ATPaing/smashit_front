@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 
 // custom hooks
 import { useAuth } from "../hooks/useAuth";
+import { API_BASE } from "../config/api.js";
 
 // components
 import SignupInput from "../components/SignupInput";
@@ -55,7 +56,7 @@ const Login = () => {
         }
 
         try {
-            const response = await fetch("http://localhost:3000/auth/login", {
+            const response = await fetch(`${API_BASE}/auth/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

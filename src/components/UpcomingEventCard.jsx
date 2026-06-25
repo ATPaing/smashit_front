@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import locationIcon from "../assets/location_icon.svg";
 import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
+import { API_BASE } from "../config/api.js";
 
 const UpcomingEventCard = () => {
     const { token } = useAuth();
@@ -17,7 +18,7 @@ const UpcomingEventCard = () => {
         const fetchInitialGame = async () => {
             try {
                 const response = await fetch(
-                    "http://localhost:3000/game/next",
+                    `${API_BASE}/game/next`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
@@ -46,7 +47,7 @@ const UpcomingEventCard = () => {
         fetchInitialGame();
 
         const eventSource = new EventSource(
-            `http://localhost:3000/sse/events?token=${token}`,
+            `${API_BASE}/sse/events?token=${token}`,
         );
 
         eventSource.onopen = () => {

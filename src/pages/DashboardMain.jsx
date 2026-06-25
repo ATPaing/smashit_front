@@ -5,6 +5,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 // components
 import SidebarNavLinkEl from "../components/SidebarNavLinkEl";
 import { useAuth } from "../hooks/useAuth";
+import { API_BASE } from "../config/api.js";
 
 // css
 import "./DashboardMain.css";
@@ -19,8 +20,6 @@ import notiIcon from "../assets/noti.svg";
 import notiIconActive from "../assets/noti_active.svg";
 import friendsIcon from "../assets/friends.svg";
 import friendsIconActive from "../assets/friends_active.svg";
-
-const API_BASE = "http://localhost:3000";
 
 const DashboardMain = () => {
     const navigate = useNavigate();
