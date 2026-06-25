@@ -1,26 +1,61 @@
 // libs
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 // css
 import "./DashboardHome.css";
 
 // icons
-
 import activityIcon from "../assets/activity_icon.svg";
-import friendReqIcon from "../assets/friend_req_icon.svg";
-import invitationIcon from "../assets/invitation_icon.svg";
-import matchAcceptedIcon from "../assets/match_accepted_icon.svg";
 
 // components
 import DashboardNotiCard from "../components/Dashboard_noti_card";
 import CreateGameModal from "../components/CreateGameModal";
 import UpcomingEventCard from "../components/UpcomingEventCard";
 import DashMetrices from "../components/DashboardMetrices";
+import { useAuth } from "../hooks/useAuth";
+
+const API_BASE = "http://localhost:3000";
+const ACTIVITY_LIMIT = 3;
 
 const DashboardHome = () => {
-
+    const { token } = useAuth();
     const [isCreateGameModalOpen, setIsCreateGameModalOpen] = useState(false);
+    const [notifications, setNotifications] = useState([]);
+    const [isLoadingActivity, setIsLoadingActivity] = useState(true);
+
+    const loadActivity = useCallback(async () => {
+        if (!token) {
+            setNotifications([]);
+            setIsLoadingActivity(false);
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_BASE}/notification`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || "Failed to load activity");
+            }
+
+            setNotifications((data.notifications || []).slice(0, ACTIVITY_LIMIT));
+        } catch (err) {
+            console.error(err);
+            setNotifications([]);
+        } finally {
+            setIsLoadingActivity(false);
+        }
+    }, [token]);
+
+    useEffect(() => {
+        loadActivity();
+    }, [loadActivity]);
+
     return (
         <div className="dashboard_home_wrapper">
             <div className="dashboard_middle_section">
@@ -40,43 +75,43 @@ const DashboardHome = () => {
                         </NavLink>
                     </div>
                     <div className="noti_card_wrapper">
-                        <DashboardNotiCard
-                            type="fri_req_noti"
-                            icon={friendReqIcon}
-                            title="NEW FRIEND REQUEST"
-                            time="3m ago"
-                            message="PiCa wants to connect with you."
-                            extra="View profile to accept or ignore."
-                        />
-                        <DashboardNotiCard
-                            type="invitation_noti"
-                            icon={invitationIcon}
-                            title="INVITATION RECEIVED"
-                            time="8m ago"
-                            message="Arthur invited you to a match."
-                            extra="at Horfield Court."
-                            game_id="123"
-                        />
-
-                        <DashboardNotiCard
-                            type="match_accepted_noti"
-                            icon={matchAcceptedIcon}
-                            title="MATCH ACCEPTED"
-                            time="15m ago"
-                            message="Your match request has been accepted."
-                            extra="Get ready to play!"
-                            game_id="13"
-                        />
+                        {isLoadingActivity ? (
+                            <p className="dashboard_activity_loading">
+                                Loading activity...
+                            </p>
+                        ) : notifications.length === 0 ? (
+                            <p className="dashboard_activity_empty">
+                                No recent activity.
+                            </p>
+                        ) : (
+                            notifications.map((notification) => (
+                                <DashboardNotiCard
+                                    key={notification.id}
+                                    notification={notification}
+                                />
+                            ))
+                        )}
                     </div>
                 </div>
-                <div className="dashboard_create_new_game_wrapper" onClick={() => setIsCreateGameModalOpen(true)}>
+                <div
+                    className="dashboard_create_new_game_wrapper"
+                    onClick={() => setIsCreateGameModalOpen(true)}
+                >
                     <div className="dashboard_create_new_game_content">
-                    <p className="dashboard_create_new_game_title">Create New Game.</p>
-                    <p className="dashboard_create_new_game_description">Host a public or private session</p>
+                        <p className="dashboard_create_new_game_title">
+                            Create New Game.
+                        </p>
+                        <p className="dashboard_create_new_game_description">
+                            Host a public or private session
+                        </p>
                     </div>
                 </div>
             </div>
-            {isCreateGameModalOpen && <CreateGameModal onClose={() => setIsCreateGameModalOpen(false)} />}
+            {isCreateGameModalOpen && (
+                <CreateGameModal
+                    onClose={() => setIsCreateGameModalOpen(false)}
+                />
+            )}
         </div>
     );
 };

@@ -1,7 +1,13 @@
 // lib
 import { NavLink } from "react-router-dom";
 
-const SidebarNavLinkEl = (dirLink, icon, activeIcon, label) => {
+const SidebarNavLinkEl = (
+    dirLink,
+    icon,
+    activeIcon,
+    label,
+    badgeCount = 0,
+) => {
     return (
         <li>
             <NavLink
@@ -15,6 +21,11 @@ const SidebarNavLinkEl = (dirLink, icon, activeIcon, label) => {
                     <>
                         <img src={isActive ? activeIcon : icon} alt="" />
                         <span>{label}</span>
+                        {badgeCount > 0 && (
+                            <span className="sidebar_badge">
+                                {badgeCount > 99 ? "99+" : badgeCount}
+                            </span>
+                        )}
                     </>
                 )}
             </NavLink>

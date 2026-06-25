@@ -245,7 +245,11 @@
     margin-top: 2.5em;
 }
 
-
+.dashboard_activity_loading,
+.dashboard_activity_empty {
+    color: #64748b;
+    font-size: 0.95rem;
+}
 
 .dashboard_create_new_game_wrapper {
     background: url('../assets/create_game_bg.png') no-repeat;

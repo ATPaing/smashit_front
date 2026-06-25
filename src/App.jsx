@@ -21,8 +21,6 @@ import DashboardHome from "./pages/DashboardHome";
 import GamesPage from "./pages/GamesPage";
 import NotificationsPage from "./pages/NotificationsPage";
 import FriendsPage from "./pages/FriendsPage";
-import ProfilePage from "./pages/ProfilePage";
-import SettingsPage from "./pages/SettingsPage";
 
 // games sub-pages
 import UpcomingGames from "./pages/UpcomingGames";
@@ -66,10 +64,6 @@ function App() {
                     />
 
                     <Route path="friends" element={<FriendsPage />} />
-
-                    <Route path="profile" element={<ProfilePage />} />
-
-                    <Route path="settings" element={<SettingsPage />} />
                 </Route>
             </Routes>
             <ToastContainer position="top-right" autoClose={3000} />

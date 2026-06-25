@@ -11,6 +11,14 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
+.noti_card_unread {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.14);
+}
+
+.noti_card_unread .noti_message {
+    font-weight: 700;
+}
+
 .fri_req_noti {
     border-left: 3px solid #3b82f6;
     color: #1e40af;
