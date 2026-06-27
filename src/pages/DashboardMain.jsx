@@ -55,6 +55,22 @@ const DashboardMain = () => {
         refreshUnreadCount();
     }, [refreshUnreadCount]);
 
+    useEffect(() => {
+        if (!token) return;
+
+        const eventSource = new EventSource(
+            `${API_BASE}/sse/events?token=${token}`,
+        );
+
+        eventSource.addEventListener("notification", () => {
+            refreshUnreadCount();
+        });
+
+        return () => {
+            eventSource.close();
+        };
+    }, [token, refreshUnreadCount]);
+
     const handleLogout = () => {
         logout();
         navigate("/login");
