@@ -5,7 +5,7 @@ import { useAuth } from "../hooks/useAuth";
 import { useGamesContext } from "../hooks/useGameContext";
 import { RealtimeContext } from "./realtimeContext.js";
 
-const POLL_INTERVAL_MS = 15000;
+const POLL_INTERVAL_MS = 10000;
 
 const RealtimeProvider = ({ children }) => {
     const { token } = useAuth();
@@ -26,8 +26,8 @@ const RealtimeProvider = ({ children }) => {
         return () => gamesChangedListeners.current.delete(listener);
     }, []);
 
-    const notifyListeners = (listeners, payload) => {
-        listeners.current.forEach((listener) => listener(payload));
+    const notifyListeners = (listeners) => {
+        listeners.current.forEach((listener) => listener());
     };
 
     const refreshUnreadCount = useCallback(async () => {
@@ -57,28 +57,16 @@ const RealtimeProvider = ({ children }) => {
 
     const syncLiveData = useCallback(async () => {
         await Promise.all([refreshUnreadCount(), refreshGames()]);
+        notifyListeners(notificationListeners);
+        notifyListeners(gamesChangedListeners);
     }, [refreshUnreadCount, refreshGames]);
 
-    const handleNotificationEvent = useCallback(
-        (event) => {
-            let payload = null;
-
-            try {
-                payload = JSON.parse(event.data);
-            } catch {
-                payload = null;
-            }
-
-            if (payload?.notification && !payload.notification.isRead) {
-                setUnreadCount((count) => count + 1);
-            }
-
-            refreshUnreadCount();
-            refreshGames();
-            notifyListeners(notificationListeners, payload);
-        },
-        [refreshUnreadCount, refreshGames],
-    );
+    const handleNotificationEvent = useCallback(() => {
+        refreshUnreadCount();
+        refreshGames();
+        notifyListeners(notificationListeners);
+        notifyListeners(gamesChangedListeners);
+    }, [refreshUnreadCount, refreshGames]);
 
     const handleGamesChanged = useCallback(() => {
         refreshGames();
@@ -91,8 +79,8 @@ const RealtimeProvider = ({ children }) => {
             return;
         }
 
-        refreshUnreadCount();
-    }, [token, refreshUnreadCount]);
+        syncLiveData();
+    }, [token, syncLiveData]);
 
     useEffect(() => {
         if (!token) return;
