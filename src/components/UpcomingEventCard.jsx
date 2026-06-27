@@ -1,8 +1,9 @@
 import { NavLink } from "react-router-dom";
 import locationIcon from "../assets/location_icon.svg";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { API_BASE } from "../config/api.js";
+import { useOnGamesChanged } from "../hooks/useRealtime";
 
 const UpcomingEventCard = () => {
     const { token } = useAuth();
@@ -10,63 +11,36 @@ const UpcomingEventCard = () => {
     const [gameData, setGameData] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
+    const fetchInitialGame = useCallback(async () => {
         if (!token) return;
 
-        let ignore = false;
+        try {
+            const response = await fetch(`${API_BASE}/game/next`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
 
-        const fetchInitialGame = async () => {
-            try {
-                const response = await fetch(
-                    `${API_BASE}/game/next`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    },
-                );
+            const data = await response.json();
 
-                const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(data.message);
-                }
-
-                if (!ignore) {
-                    setGameData(data.game);
-                }
-            } catch (err) {
-                console.error(err);
-            } finally {
-                if (!ignore) {
-                    setLoading(false);
-                }
+            if (!response.ok) {
+                throw new Error(data.message);
             }
-        };
 
-        fetchInitialGame();
-
-        const eventSource = new EventSource(
-            `${API_BASE}/sse/events?token=${token}`,
-        );
-
-        eventSource.onopen = () => {
-            console.log("SSE connected");
-        };
-
-        eventSource.onerror = (err) => {
-            console.error("SSE error", err);
-        };
-
-        eventSource.addEventListener("next-game-changed", () => {
-            fetchInitialGame();
-        });
-
-        return () => {
-            ignore = true;
-            eventSource.close();
-        };
+            setGameData(data.game);
+        } catch (err) {
+            console.error(err);
+            setGameData(null);
+        } finally {
+            setLoading(false);
+        }
     }, [token]);
+
+    useEffect(() => {
+        fetchInitialGame();
+    }, [fetchInitialGame]);
+
+    useOnGamesChanged(fetchInitialGame);
 
     if (loading) {
         return (

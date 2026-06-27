@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import NotificationListItem from "../components/NotificationListItem";
 import { useAuth } from "../hooks/useAuth";
 import { API_BASE } from "../config/api.js";
+import { useOnNotification } from "../hooks/useRealtime";
 
 import "./NotificationsPage.css";
 
@@ -52,6 +53,8 @@ const NotificationsPage = () => {
 
         loadPage();
     }, [loadNotifications]);
+
+    useOnNotification(loadNotifications);
 
     const unreadCount = useMemo(
         () => notifications.filter((notification) => !notification.isRead).length,

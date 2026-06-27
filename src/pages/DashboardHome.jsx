@@ -15,6 +15,7 @@ import UpcomingEventCard from "../components/UpcomingEventCard";
 import DashMetrices from "../components/DashboardMetrices";
 import { useAuth } from "../hooks/useAuth";
 import { API_BASE } from "../config/api.js";
+import { useOnNotification } from "../hooks/useRealtime";
 
 const ACTIVITY_LIMIT = 3;
 
@@ -55,6 +56,8 @@ const DashboardHome = () => {
     useEffect(() => {
         loadActivity();
     }, [loadActivity]);
+
+    useOnNotification(loadActivity);
 
     return (
         <div className="dashboard_home_wrapper">

@@ -1,11 +1,10 @@
 // lib
-import { useCallback, useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
 // components
 import SidebarNavLinkEl from "../components/SidebarNavLinkEl";
 import { useAuth } from "../hooks/useAuth";
-import { API_BASE } from "../config/api.js";
+import { useRealtime } from "../hooks/useRealtime";
 
 // css
 import "./DashboardMain.css";
@@ -23,53 +22,8 @@ import friendsIconActive from "../assets/friends_active.svg";
 
 const DashboardMain = () => {
     const navigate = useNavigate();
-    const { token, logout } = useAuth();
-    const [unreadCount, setUnreadCount] = useState(0);
-
-    const refreshUnreadCount = useCallback(async () => {
-        if (!token) {
-            setUnreadCount(0);
-            return;
-        }
-
-        try {
-            const response = await fetch(
-                `${API_BASE}/notification/unread-count`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                },
-            );
-            const data = await response.json();
-
-            if (response.ok) {
-                setUnreadCount(data.count ?? 0);
-            }
-        } catch (err) {
-            console.error(err);
-        }
-    }, [token]);
-
-    useEffect(() => {
-        refreshUnreadCount();
-    }, [refreshUnreadCount]);
-
-    useEffect(() => {
-        if (!token) return;
-
-        const eventSource = new EventSource(
-            `${API_BASE}/sse/events?token=${token}`,
-        );
-
-        eventSource.addEventListener("notification", () => {
-            refreshUnreadCount();
-        });
-
-        return () => {
-            eventSource.close();
-        };
-    }, [token, refreshUnreadCount]);
+    const { logout } = useAuth();
+    const { unreadCount, refreshUnreadCount } = useRealtime();
 
     const handleLogout = () => {
         logout();

@@ -45,29 +45,6 @@ const GameProvider = ({ children }) => {
         loadGames();
     }, [user?.id, refreshGames]);
 
-    useEffect(() => {
-        if (!user?.id) return;
-
-        const token = localStorage.getItem("token");
-        if (!token) return;
-
-        const eventSource = new EventSource(
-            `${API_BASE}/sse/events?token=${token}`,
-        );
-
-        eventSource.addEventListener("notification", () => {
-            refreshGames();
-        });
-
-        eventSource.addEventListener("next-game-changed", () => {
-            refreshGames();
-        });
-
-        return () => {
-            eventSource.close();
-        };
-    }, [user?.id, refreshGames]);
-
     return (
         <GameContext.Provider
             value={{
